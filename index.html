@@ -117,7 +117,7 @@
                         初期見積もりから最終費用は <strong class="text-white border-b border-red-400">平均 ＋80万〜120万円</strong> 上昇します。下部の項目をチェックしてリアルな相場を確認してください。
                     </p>
                 </div>
-                <!-- シェア・コピーボタン -->
+                <!-- シェア・コピー・画像保存ボタン -->
                 <div class="flex gap-2 flex-wrap">
                     <button id="twitterShareBtn" onclick="shareToTwitter()" class="share-btn smooth-transition flex items-center gap-1.5 bg-[#1d9bf0]/20 hover:bg-[#1d9bf0]/30 border border-[#1d9bf0]/40 text-[#7dd3fc] text-xs font-bold px-3 py-1.5 rounded-lg">
                         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
@@ -126,6 +126,10 @@
                     <button id="copyResultBtn" onclick="copyResult()" class="share-btn smooth-transition flex items-center gap-1.5 bg-slate-700/60 hover:bg-slate-600/60 border border-slate-600/50 text-slate-300 text-xs font-bold px-3 py-1.5 rounded-lg">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         <span id="copyBtnText">結果をコピー</span>
+                    </button>
+                    <button id="saveImageBtn" onclick="saveAsImage()" class="share-btn smooth-transition flex items-center gap-1.5 bg-gold-500/20 hover:bg-gold-500/30 border border-gold-500/40 text-gold-300 text-xs font-bold px-3 py-1.5 rounded-lg">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        <span id="saveImageBtnText">画像で保存</span>
                     </button>
                 </div>
             </div>
@@ -458,6 +462,149 @@
             } catch (e) {
                 alert('コピーに失敗しました。手動でコピーしてください。\n\n' + text);
             }
+        }
+
+        function saveAsImage() {
+            const btn = document.getElementById('saveImageBtnText');
+            btn.innerText = '生成中...';
+
+            const grandTotal = document.getElementById('grandTotal').innerText;
+            const goshugi   = document.getElementById('goshugiTotal').innerText;
+            const burden    = document.getElementById('realBurden').innerText;
+            const isSurplus = document.getElementById('realBurden').classList.contains('text-green-400');
+
+            // Canvas サイズ（SNS最適 1200×630）
+            const W = 1200, H = 630;
+            const canvas = document.createElement('canvas');
+            canvas.width  = W;
+            canvas.height = H;
+            const ctx = canvas.getContext('2d');
+
+            // ── 背景グラデーション ──
+            const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+            bgGrad.addColorStop(0,   '#0f172a');
+            bgGrad.addColorStop(0.5, '#1e293b');
+            bgGrad.addColorStop(1,   '#0f172a');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, W, H);
+
+            // ── 装飾：ゴールド斜めライン ──
+            ctx.save();
+            ctx.strokeStyle = 'rgba(197,160,89,0.07)';
+            ctx.lineWidth = 1;
+            for (let i = -H; i < W + H; i += 48) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i + H, H);
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            // ── 装飾：上部ゴールドライン ──
+            const topLine = ctx.createLinearGradient(0, 0, W, 0);
+            topLine.addColorStop(0,   'transparent');
+            topLine.addColorStop(0.3, '#c5a059');
+            topLine.addColorStop(0.7, '#c5a059');
+            topLine.addColorStop(1,   'transparent');
+            ctx.fillStyle = topLine;
+            ctx.fillRect(0, 0, W, 3);
+
+            // ── ブランド名 ──
+            ctx.fillStyle = '#c5a059';
+            ctx.font = 'italic 700 22px Georgia, serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Wedding Financial Intelligence', W / 2, 58);
+
+            // ── タイトル ──
+            ctx.fillStyle = '#f1f5f9';
+            ctx.font = 'bold 44px "Hiragino Kaku Gothic Pro", "Noto Sans JP", sans-serif';
+            ctx.fillText('リアル見積もり「闇」シミュレーター', W / 2, 118);
+
+            // ── 区切り線 ──
+            ctx.strokeStyle = 'rgba(197,160,89,0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(160, 142); ctx.lineTo(W - 160, 142);
+            ctx.stroke();
+
+            // ── 数値カード ヘルパー ──
+            function drawCard(x, y, w, h, label, value, labelColor, valueColor) {
+                // カード背景
+                ctx.fillStyle = 'rgba(30,41,59,0.85)';
+                const r = 20;
+                ctx.beginPath();
+                ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y);
+                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+                ctx.lineTo(x + w, y + h - r);
+                ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                ctx.lineTo(x + r, y + h);
+                ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
+                ctx.fill();
+                // ボーダー
+                ctx.strokeStyle = 'rgba(197,160,89,0.25)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                // ラベル
+                ctx.fillStyle = labelColor;
+                ctx.font = '600 20px "Hiragino Kaku Gothic Pro", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(label, x + w / 2, y + 46);
+                // 値
+                ctx.fillStyle = valueColor;
+                ctx.font = 'bold 36px "Hiragino Kaku Gothic Pro", sans-serif';
+                ctx.fillText(value, x + w / 2, y + 100);
+            }
+
+            const pad = 60, gap = 24;
+            const cardW = (W - pad * 2 - gap * 2) / 3;
+            const cardY = 170, cardH = 130;
+
+            drawCard(pad,                 cardY, cardW, cardH, '式場＋指輪 総額',  grandTotal, '#94a3b8', '#f1f5f9');
+            drawCard(pad + cardW + gap,   cardY, cardW, cardH, 'ゲスト回収額（-）', goshugi,    '#86efac', '#86efac');
+            drawCard(pad + (cardW + gap)*2, cardY, cardW, cardH, '実質自己負担額',    burden,     '#fde68a', isSurplus ? '#4ade80' : '#f59e0b');
+
+            // ── メイン強調：自己負担額 ──
+            const mainY = 350;
+            ctx.fillStyle = 'rgba(197,160,89,0.08)';
+            const mx = pad, mw = W - pad * 2, mh = 140;
+            ctx.beginPath();
+            ctx.roundRect(mx, mainY, mw, mh, 24);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(197,160,89,0.4)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            ctx.fillStyle = '#fde68a';
+            ctx.font = '600 22px "Hiragino Kaku Gothic Pro", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('✨  最終的な実質自己負担額', W / 2, mainY + 48);
+
+            ctx.fillStyle = isSurplus ? '#4ade80' : '#f59e0b';
+            ctx.font = 'bold 68px "Hiragino Kaku Gothic Pro", sans-serif';
+            ctx.fillText(burden, W / 2, mainY + 118);
+
+            // ── フッター注釈 ──
+            ctx.fillStyle = 'rgba(148,163,184,0.7)';
+            ctx.font = '400 19px "Hiragino Kaku Gothic Pro", sans-serif';
+            ctx.fillText('先輩花嫁のリアル：初期見積もりから最終費用は平均 ＋80万〜120万円 上昇します', W / 2, 532);
+
+            // ── URL ──
+            ctx.fillStyle = 'rgba(197,160,89,0.6)';
+            ctx.font = '400 18px Georgia, serif';
+            ctx.fillText('wedding-cost-simulator-beta.vercel.app', W / 2, 570);
+
+            // ── ダウンロード ──
+            const link = document.createElement('a');
+            link.download = 'wedding-simulation-result.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            btn.innerText = '✓ 保存完了！';
+            setTimeout(() => { btn.innerText = '画像で保存'; }, 2500);
+            gtag('event', 'share', { method: 'save_image' });
         }
 
         calculate();
