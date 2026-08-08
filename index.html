@@ -3,22 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxe Wedding - リアル見積もり＆節約シミュレーター</title>
+    <title>結婚式リアル見積もり「闇」シミュレーター | Luxe Wedding</title>
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="結婚式の見積もり「闇」ポイントを可視化！初期見積もりから最終費用の差額をシミュレーション。ご祝儀・会費制対応の節約シミュレーターで自己負担額をリアルに把握。">
-    <meta name="keywords" content="結婚式,見積もり,シミュレーター,節約,ウェディング,結婚指輪,ご祝儀">
+    <meta name="keywords" content="結婚式,見積もり,シミュレーター,節約,ウェディング,結婚指輪,ご祝儀,ハナユメ,ゼクシィ">
     <meta name="author" content="Luxe Wedding">
-    <meta property="og:title" content="リアル見積もり「闇」シミュレーター | Luxe Wedding">
-    <meta property="og:description" content="結婚式の隠れコストを可視化。初期見積もりから平均80〜120万円も上昇する実態を先輩花嫁のリアルデータでシミュレーション。">
+
+    <!-- OGP / SNS Share Meta -->
+    <meta property="og:title" content="結婚式リアル見積もり「闇」シミュレーター">
+    <meta property="og:description" content="初期見積もりから平均＋80〜120万円！隠れコストを可視化して実質自己負担額を今すぐチェック。">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wedding-cost-simulator-beta.vercel.app/">
+    <meta property="og:image" content="https://wedding-cost-simulator-beta.vercel.app/ogp.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="結婚式リアル見積もり「闇」シミュレーター">
+    <meta name="twitter:description" content="初期見積もりから平均＋80〜120万円！隠れコストを可視化して実質自己負担額を今すぐチェック。">
+    <meta name="twitter:image" content="https://wedding-cost-simulator-beta.vercel.app/ogp.png">
+
+    <!-- Google Analytics GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DE6M0JQXJL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DE6M0JQXJL');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8293269414215706" crossorigin="anonymous"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        gold: { 50: '#fdfbf7', 100: '#f4ebd0', 500: '#c5a059', 600: '#a8833e', 700: '#8c6b2e' },
+                        gold: { 50: '#fdfbf7', 100: '#f4ebd0', 400: '#d4b06a', 500: '#c5a059', 600: '#a8833e', 700: '#8c6b2e' },
                         wedding: { bg: '#fcfbf9', card: '#ffffff', text: '#2c2c2c', muted: '#717171' }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                        'pulse-gold': 'pulseGold 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(8px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        pulseGold: { '0%, 100%': { textShadow: '0 0 8px rgba(197,160,89,0.4)' }, '50%': { textShadow: '0 0 20px rgba(197,160,89,0.8)' } }
                     }
                 }
             }
@@ -30,16 +63,35 @@
         .serif-title { font-family: 'Cormorant Garamond', serif; }
         .shadow-custom { box-shadow: 0 10px 30px -5px rgba(197, 160, 89, 0.08); }
         .smooth-transition { transition: all 0.3s ease-in-out; }
+        .affiliate-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px -4px rgba(197, 160, 89, 0.18); }
+        .share-btn:hover { transform: scale(1.04); }
+        .copy-success { animation: fadeIn 0.2s ease-in-out; }
+        .ad-container { min-height: 90px; background: #f8f6f2; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .ad-label { font-size: 10px; color: #b0a898; letter-spacing: 0.05em; }
     </style>
 </head>
 <body class="bg-wedding-bg min-h-screen pb-24">
 
+    <!-- ヘッダー -->
     <header class="bg-white/90 border-b border-gold-100 py-5 px-4 text-center sticky top-0 z-50 backdrop-blur-md shadow-sm">
         <p class="serif-title text-gold-500 tracking-widest text-xs font-semibold uppercase mb-1">Wedding Financial Intelligence</p>
         <h1 class="text-xl font-bold tracking-wide text-gray-800">リアル見積もり「闇」シミュレーター</h1>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 mt-6 space-y-6">
+    <!-- AdSense 広告：ヘッダー直下 レスポンシブバナー -->
+    <div class="max-w-4xl mx-auto px-4 mt-4">
+        <div class="ad-container overflow-hidden">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8293269414215706"
+                 data-ad-slot="auto"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
+    <main class="max-w-4xl mx-auto px-4 mt-4 space-y-6">
 
         <!-- リアルタイム結果ダッシュボード -->
         <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-5 rounded-2xl shadow-xl relative overflow-hidden">
@@ -57,26 +109,38 @@
                     <p id="realBurden" class="text-2xl md:text-3xl font-bold text-gold-400 mt-1 smooth-transition">0円</p>
                 </div>
             </div>
-            
+
             <div class="mt-4 pt-4 border-t border-slate-700/50">
-                <div class="flex items-start space-x-2">
+                <div class="flex items-start space-x-2 mb-3">
                     <span class="bg-red-500/20 border border-red-500/50 text-red-300 text-[10px] font-bold px-1.5 py-0.5 rounded whitespace-nowrap mt-0.5">先輩花嫁のリアル</span>
                     <p class="text-xs text-slate-300 leading-relaxed">
                         初期見積もりから最終費用は <strong class="text-white border-b border-red-400">平均 ＋80万〜120万円</strong> 上昇します。下部の項目をチェックしてリアルな相場を確認してください。
                     </p>
                 </div>
+                <!-- シェア・コピーボタン -->
+                <div class="flex gap-2 flex-wrap">
+                    <button id="twitterShareBtn" onclick="shareToTwitter()" class="share-btn smooth-transition flex items-center gap-1.5 bg-[#1d9bf0]/20 hover:bg-[#1d9bf0]/30 border border-[#1d9bf0]/40 text-[#7dd3fc] text-xs font-bold px-3 py-1.5 rounded-lg">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+                        X（Twitter）でシェア
+                    </button>
+                    <button id="copyResultBtn" onclick="copyResult()" class="share-btn smooth-transition flex items-center gap-1.5 bg-slate-700/60 hover:bg-slate-600/60 border border-slate-600/50 text-slate-300 text-xs font-bold px-3 py-1.5 rounded-lg">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <span id="copyBtnText">結果をコピー</span>
+                    </button>
+                </div>
             </div>
         </section>
 
         <!-- タブナビゲーション -->
-        <div class="flex border-b border-gold-100 justify-start md:justify-center space-x-2 overflow-x-auto whitespace-nowrap px-1 pb-1">
+        <div class="flex border-b border-gold-100 justify-start md:justify-center space-x-1 overflow-x-auto whitespace-nowrap px-1 pb-1">
             <button onclick="switchTab('venue')" id="tab-venue" class="pb-2 border-b-2 border-gold-500 text-gold-700 font-bold text-sm px-3 smooth-transition">1. 基本・闇チェック</button>
             <button onclick="switchTab('bring')" id="tab-bring" class="pb-2 border-b-2 border-transparent text-wedding-muted hover:text-gold-600 text-sm px-3 smooth-transition">2. 節約アクション</button>
             <button onclick="switchTab('ring')" id="tab-ring" class="pb-2 border-b-2 border-transparent text-wedding-muted hover:text-gold-600 text-sm px-3 smooth-transition">3. 結婚指輪</button>
+            <button onclick="switchTab('affiliate')" id="tab-affiliate" class="pb-2 border-b-2 border-transparent text-wedding-muted hover:text-gold-600 text-sm px-3 smooth-transition">💰 節約サービス</button>
         </div>
 
         <!-- タブ1：式場関連・闇チェック -->
-        <div id="section-venue" class="space-y-5 animate-fade-in">
+        <div id="section-venue" class="space-y-5">
             <div class="bg-white p-5 rounded-2xl shadow-custom border border-gold-50 space-y-4">
                 <h2 class="text-base font-bold border-l-4 border-gold-500 pl-2">基本設定</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -131,6 +195,17 @@
                     </label>
                 </div>
             </div>
+
+            <!-- AdSense：タブ1内 インフィード広告 -->
+            <div class="ad-container overflow-hidden">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8293269414215706"
+                     data-ad-slot="auto"
+                     data-ad-format="fluid"
+                     data-ad-layout="in-article"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
         </div>
 
         <!-- タブ2：節約アクション -->
@@ -168,7 +243,141 @@
             </div>
         </section>
 
+        <!-- タブ4：アフィリエイト / 節約サービス -->
+        <div id="section-affiliate" class="space-y-5 hidden">
+
+            <div class="bg-gradient-to-r from-gold-50 to-amber-50 border border-gold-100 rounded-2xl p-4">
+                <p class="text-xs text-gold-700 font-bold mb-1">💡 賢い花嫁のポイント</p>
+                <p class="text-xs text-gray-600 leading-relaxed">式場探しから指輪選びまで、賢く比較すれば<strong class="text-gold-700">数十万円の節約</strong>も可能です。以下のサービスはすべて無料で使えます。</p>
+            </div>
+
+            <!-- 式場探し -->
+            <div class="bg-white p-5 rounded-2xl shadow-custom border border-gold-50 space-y-3">
+                <h2 class="text-base font-bold border-l-4 border-gold-500 pl-2">🏛️ 式場探し・相談</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+                    <a href="https://hanayume.com/" target="_blank" rel="noopener sponsored"
+                       onclick="gtag('event', 'affiliate_click', {service: 'hanayume', tab: 'affiliate'})"
+                       class="affiliate-card smooth-transition block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-xl flex-shrink-0">🌸</div>
+                            <div>
+                                <p class="font-bold text-sm text-gray-800">ハナユメ</p>
+                                <p class="text-xs text-green-600 font-bold mt-0.5">平均 -30万円引き交渉実績</p>
+                                <p class="text-xs text-wedding-muted mt-1">式場の割引交渉を無料でサポート。ブライダルフェアの予約も簡単。</p>
+                                <span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">無料相談あり</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://zexy.net/" target="_blank" rel="noopener sponsored"
+                       onclick="gtag('event', 'affiliate_click', {service: 'zexy', tab: 'affiliate'})"
+                       class="affiliate-card smooth-transition block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center text-xl flex-shrink-0">💍</div>
+                            <div>
+                                <p class="font-bold text-sm text-gray-800">ゼクシィ</p>
+                                <p class="text-xs text-green-600 font-bold mt-0.5">国内最大級の掲載式場数</p>
+                                <p class="text-xs text-wedding-muted mt-1">全国2,000式場以上を比較。口コミ・費用感も丸わかり。</p>
+                                <span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">口コミ多数</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://wedding.mynavi.jp/" target="_blank" rel="noopener sponsored"
+                       onclick="gtag('event', 'affiliate_click', {service: 'mynavi_wedding', tab: 'affiliate'})"
+                       class="affiliate-card smooth-transition block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-xl flex-shrink-0">✨</div>
+                            <div>
+                                <p class="font-bold text-sm text-gray-800">マイナビウェディング</p>
+                                <p class="text-xs text-green-600 font-bold mt-0.5">フェア参加でギフト券プレゼント</p>
+                                <p class="text-xs text-wedding-muted mt-1">ブライダルフェア参加でAmazonギフト券最大5万円分。</p>
+                                <span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">特典あり</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://www.minshu.jp/" target="_blank" rel="noopener sponsored"
+                       onclick="gtag('event', 'affiliate_click', {service: 'minshu', tab: 'affiliate'})"
+                       class="affiliate-card smooth-transition block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center text-xl flex-shrink-0">👰</div>
+                            <div>
+                                <p class="font-bold text-sm text-gray-800">みんなのウェディング</p>
+                                <p class="text-xs text-green-600 font-bold mt-0.5">リアルな体験談・口コミが豊富</p>
+                                <p class="text-xs text-wedding-muted mt-1">実際の花嫁の費用明細や体験談をもとに式場を比較。</p>
+                                <span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">費用明細あり</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 結婚指輪 -->
+            <div class="bg-white p-5 rounded-2xl shadow-custom border border-gold-50 space-y-3">
+                <h2 class="text-base font-bold border-l-4 border-gold-500 pl-2">💍 結婚指輪・婚約指輪</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+                    <a href="https://www.i-primo.jp/" target="_blank" rel="noopener sponsored"
+                       onclick="gtag('event', 'affiliate_click', {service: 'i-primo', tab: 'affiliate'})"
+                       class="affiliate-card smooth-transition block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-yellow-50 flex items-center justify-center text-xl flex-shrink-0">🥇</div>
+                            <div>
+                                <p class="font-bold text-sm text-gray-800">アイプリモ</p>
+                                <p class="text-xs text-green-600 font-bold mt-0.5">国内販売数No.1ブランド</p>
+                                <p class="text-xs text-wedding-muted mt-1">職人手作りのオーダーメイドリング。品質と価格のバランス◎</p>
+                                <span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">来店予約でギフト</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://4cs.gia.edu/ja-JP/4cs-diamond-quality/" target="_blank" rel="noopener sponsored"
+                       onclick="gtag('event', 'affiliate_click', {service: 'rakuten_wedding', tab: 'affiliate'})"
+                       class="affiliate-card smooth-transition block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center text-xl flex-shrink-0">💎</div>
+                            <div>
+                                <p class="font-bold text-sm text-gray-800">楽天ウェディング</p>
+                                <p class="text-xs text-green-600 font-bold mt-0.5">ポイント還元で実質節約</p>
+                                <p class="text-xs text-wedding-muted mt-1">楽天ポイントが貯まる。指輪からフォト婚まで幅広く対応。</p>
+                                <span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">ポイント還元</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- AdSense：アフィリエイトタブ内 -->
+            <div class="ad-container overflow-hidden">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8293269414215706"
+                     data-ad-slot="auto"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+            <p class="text-center text-[10px] text-wedding-muted pb-2">※ 上記リンクはアフィリエイトリンクを含む場合があります</p>
+        </div>
+
     </main>
+
+    <!-- AdSense：フッター固定バナー -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-gray-100 shadow-lg z-40">
+        <div class="max-w-4xl mx-auto">
+            <div class="ad-label text-center pt-1">広告</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8293269414215706"
+                 data-ad-slot="auto"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
 
     <script>
         function switchTab(tabName) {
@@ -177,18 +386,19 @@
                 el.classList.remove('border-gold-500', 'text-gold-700', 'font-bold');
                 el.classList.add('border-transparent', 'text-wedding-muted');
             });
-            
             document.getElementById('section-' + tabName).classList.remove('hidden');
             const activeTab = document.getElementById('tab-' + tabName);
             activeTab.classList.remove('border-transparent', 'text-wedding-muted');
             activeTab.classList.add('border-gold-500', 'text-gold-700', 'font-bold');
+
+            // GA4 タブ切り替えイベント
+            gtag('event', 'tab_switch', { tab_name: tabName });
         }
 
         function calculate() {
             const guest = parseInt(document.getElementById('guestCount').value) || 0;
             const initial = parseInt(document.getElementById('initialEstimate').value) || 0;
             const contributionRate = parseInt(document.getElementById('contributionType').value) || 0;
-
             const totalGoshugi = guest * contributionRate;
 
             let venueCost = initial;
@@ -202,24 +412,54 @@
 
             const finalVenue = venueCost + savingCost;
             const finalRing = parseInt(document.getElementById('ringTier').value) || 0;
-            
             const grandTotal = finalVenue + finalRing;
             const realBurden = grandTotal - totalGoshugi;
 
             document.getElementById('grandTotal').innerText = grandTotal.toLocaleString() + '円';
             document.getElementById('goshugiTotal').innerText = totalGoshugi.toLocaleString() + '円';
-            
+
             const burdenEl = document.getElementById('realBurden');
-            if(realBurden > 0) {
+            if (realBurden > 0) {
                 burdenEl.innerText = realBurden.toLocaleString() + '円';
                 burdenEl.classList.remove('text-green-400');
                 burdenEl.classList.add('text-gold-400');
             } else {
-                burdenEl.innerText = "黒字（+" + Math.abs(realBurden).toLocaleString() + "円）";
+                burdenEl.innerText = '黒字（+' + Math.abs(realBurden).toLocaleString() + '円）';
                 burdenEl.classList.remove('text-gold-400');
                 burdenEl.classList.add('text-green-400');
             }
         }
+
+        function getResultText() {
+            const grandTotal = document.getElementById('grandTotal').innerText;
+            const goshugi = document.getElementById('goshugiTotal').innerText;
+            const burden = document.getElementById('realBurden').innerText;
+            return `【結婚式費用シミュレーション結果】\n式場＋指輪 総額: ${grandTotal}\nゲスト回収額: ${goshugi}\n✨ 実質自己負担額: ${burden}\n\n#結婚式費用 #プレ花嫁 #ウェディング\nhttps://wedding-cost-simulator-beta.vercel.app/`;
+        }
+
+        function shareToTwitter() {
+            const grandTotal = document.getElementById('grandTotal').innerText;
+            const burden = document.getElementById('realBurden').innerText;
+            const text = `【結婚式費用シミュレーション】\n式場＋指輪 総額: ${grandTotal}\n✨ 実質自己負担額: ${burden}\n\n#結婚式費用 #プレ花嫁 #ウェディング`;
+            const url = 'https://wedding-cost-simulator-beta.vercel.app/';
+            const twitterUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+            window.open(twitterUrl, '_blank');
+            gtag('event', 'share', { method: 'twitter' });
+        }
+
+        async function copyResult() {
+            const text = getResultText();
+            try {
+                await navigator.clipboard.writeText(text);
+                const btn = document.getElementById('copyBtnText');
+                btn.innerText = '✓ コピー完了！';
+                setTimeout(() => { btn.innerText = '結果をコピー'; }, 2000);
+                gtag('event', 'share', { method: 'clipboard' });
+            } catch (e) {
+                alert('コピーに失敗しました。手動でコピーしてください。\n\n' + text);
+            }
+        }
+
         calculate();
     </script>
 </body>
