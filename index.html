@@ -3,782 +3,703 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>結婚式リアル見積もり「闇」シミュレーター | Luxe Wedding</title>
-    <meta name="description" content="結婚式の隠れコスト・持ち込み料・値上がり要因を完全可視化。料理・装花・衣装の平均着地価格とサービス料・消費税込みの実質自己負担額をリアルタイム計算。">
-    <meta name="keywords" content="結婚式,見積もり,シミュレーター,節約,ウェディング,結婚指輪,持ち込み料,隠れコスト,プレ花嫁,トキハナ">
-    <meta name="author" content="Luxe Wedding">
-    <meta property="og:title" content="結婚式リアル見積もり「闇」シミュレーター">
-    <meta property="og:description" content="持ち込み料の罠・隠れコスト・サービス料×消費税を完全可視化。実質自己負担額を今すぐチェック。">
+    <title>結婚式費用シミュレーター💍 | ウェディング見積もりリアルチェッカー</title>
+    <meta name="description" content="結婚式の隠れコスト・持ち込み料・値上がり要因を完全可視化。実質自己負担額をリアルタイム計算。プレ花嫁に人気の無料シミュレーター。">
+    <meta name="keywords" content="結婚式,見積もり,シミュレーター,節約,ウェディング,指輪,持ち込み料,隠れコスト,プレ花嫁">
+    <meta property="og:title" content="結婚式費用シミュレーター💍 ウェディング見積もりリアルチェッカー">
+    <meta property="og:description" content="隠れコスト・持ち込み料の罠を全部見える化！実質自己負担額を今すぐチェック✨">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wedding-cost-simulator-beta.vercel.app/">
     <meta property="og:image" content="https://wedding-cost-simulator-beta.vercel.app/ogp.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://wedding-cost-simulator-beta.vercel.app/ogp.png">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DE6M0JQXJL"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DE6M0JQXJL');</script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8293269414215706" crossorigin="anonymous"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config={theme:{extend:{colors:{gold:{50:'#fdfbf7',100:'#f4ebd0',400:'#d4b06a',500:'#c5a059',600:'#a8833e',700:'#8c6b2e'}}}}}</script>
+    <script>tailwind.config={theme:{extend:{colors:{pink:{50:'#fff0f6',100:'#ffe3ef',200:'#ffc2d4',400:'#f472b6',500:'#ec4899',600:'#db2777'},mint:{50:'#f0fdf9',100:'#ccfbef',200:'#99f6e4',400:'#34d399',500:'#10b981'},yel:{50:'#fffbeb',100:'#fef3c7',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b'}}}}}</script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
-        body{font-family:'Noto Sans JP',sans-serif;background:#fcfbf9;color:#2c2c2c;}
-        .serif{font-family:'Cormorant Garamond',serif;}
-        .sc{box-shadow:0 10px 30px -5px rgba(197,160,89,.08);}
-        .tr{transition:all .25s ease;}
-        /* Range slider */
-        .sl{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;outline:none;cursor:pointer;}
-        .sl::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#c5a059;cursor:pointer;border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.18);}
-        .sl::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#c5a059;cursor:pointer;border:3px solid #fff;}
-        /* Cards */
-        .ring-card input[type="radio"]{display:none;}
-        .ri{border:2px solid #e5e7eb;border-radius:14px;padding:14px;cursor:pointer;transition:all .2s;background:#fff;}
-        .ring-card input[type="radio"]:checked+.ri{border-color:#c5a059;background:#fdfbf7;box-shadow:0 0 0 3px rgba(197,160,89,.15);}
-        .ri:hover{border-color:#d4b06a;background:#fdfbf7;}
-        /* Affiliate */
-        .ac{transition:all .25s;}
-        .ac:hover{transform:translateY(-3px);box-shadow:0 12px 32px -4px rgba(197,160,89,.18);}
-        /* Hover labels */
-        .hl:hover{background:rgba(254,242,242,.6);}
-        .hl-g:hover{background:rgba(220,252,231,.4);}
-        /* Ad */
-        .adb{min-height:80px;background:#f8f6f2;border-radius:12px;overflow:hidden;}
-        /* Mode pulse */
-        @keyframes pulse-red{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}70%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
-        .pr{animation:pulse-red 2s infinite;}
-        /* Burden bar */
-        .burden-bar{height:6px;border-radius:3px;transition:width .4s ease,background .4s ease;}
-        details summary{list-style:none;}
+        *{font-family:'M PLUS Rounded 1c',sans-serif;}
+        body{background:#fff5f8;color:#374151;}
+        .sl{-webkit-appearance:none;width:100%;height:8px;border-radius:99px;outline:none;cursor:pointer;}
+        .sl::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#f472b6;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 8px rgba(244,114,182,.4);}
+        .sl::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#f472b6;cursor:pointer;border:3px solid #fff;}
+        .card{background:#fff;border-radius:28px;box-shadow:0 4px 24px rgba(244,114,182,.08);padding:20px;}
+        .pill-tab{border-radius:99px;padding:8px 16px;font-weight:700;font-size:12px;transition:all .2s;white-space:nowrap;}
+        .pill-tab.active{background:linear-gradient(135deg,#f472b6,#fb7185);color:#fff;box-shadow:0 4px 14px rgba(244,114,182,.4);}
+        .pill-tab:not(.active){background:#fce7f3;color:#db2777;}
+        .pill-tab:not(.active):hover{background:#fbcfe8;}
+        .chk-row{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:16px;cursor:pointer;transition:background .15s;}
+        .chk-row:hover{background:#fff0f6;}
+        .chk-row input[type=checkbox]{width:18px;height:18px;accent-color:#f472b6;flex-shrink:0;margin-top:2px;}
+        .pr-btn{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid #fce7f3;border-radius:20px;padding:14px 16px;text-decoration:none;transition:all .2s;position:relative;overflow:hidden;}
+        .pr-btn:hover{border-color:#f472b6;background:#fff0f6;transform:translateY(-2px);box-shadow:0 8px 20px rgba(244,114,182,.15);}
+        .pr-badge{position:absolute;top:6px;right:8px;font-size:9px;color:#9ca3af;background:#f3f4f6;padding:1px 5px;border-radius:99px;}
+        .mode-btn{flex:1;padding:10px;border-radius:20px;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;}
+        .emo-big{font-size:32px;line-height:1;}
+        @keyframes bounce-in{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+        .bounce{animation:bounce-in .35s ease;}
+        details summary{list-style:none;cursor:pointer;}
         details summary::-webkit-details-marker{display:none;}
     </style>
 </head>
-<body class="min-h-screen pb-28">
+<body class="min-h-screen">
 
-<header class="bg-white/90 border-b border-gold-100 py-4 px-4 text-center sticky top-0 z-50 backdrop-blur-md shadow-sm">
-    <p class="serif text-gold-500 tracking-widest text-[10px] font-semibold uppercase mb-0.5">Wedding Financial Intelligence</p>
-    <h1 class="text-lg font-bold tracking-wide text-gray-800">リアル見積もり「闇」シミュレーター</h1>
+<!-- ===== HEADER ===== -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-pink-100 shadow-sm">
+    <div class="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
+        <div class="text-2xl">💍</div>
+        <div>
+            <h1 class="font-black text-base text-gray-800 leading-tight">ウェディング費用シミュレーター</h1>
+            <p class="text-[11px] text-pink-400 font-bold">隠れコスト＆持ち込み料まで全部見える化！</p>
+        </div>
+    </div>
 </header>
 
-<div class="max-w-4xl mx-auto px-4 mt-3">
-    <div class="adb"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8293269414215706" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+<!-- AdSense top -->
+<div class="max-w-2xl mx-auto px-4 mt-3">
+    <ins class="adsbygoogle" style="display:block;min-height:60px;" data-ad-client="ca-pub-8293269414215706" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
 </div>
 
-<main class="max-w-4xl mx-auto px-4 mt-4 space-y-4">
+<main class="max-w-2xl mx-auto px-4 mt-4 pb-8 space-y-4">
 
 <!-- ===== 基本設定 ===== -->
-<div class="bg-white p-5 rounded-2xl sc border border-gold-50 space-y-4">
-    <!-- Mode toggle -->
-    <div class="flex bg-gray-100 rounded-2xl p-1 gap-1">
-        <button id="btn-dream" onclick="setMode('dream')" class="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold py-2.5 px-2 rounded-xl bg-pink-400 text-white shadow-sm tr">🌸 夢見がちモード</button>
-        <button id="btn-real"  onclick="setMode('real')"  class="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold py-2.5 px-2 rounded-xl text-gray-500 tr hover:bg-gray-200">😱 現実直視モード</button>
+<div class="card space-y-4">
+    <!-- モード切替 -->
+    <div class="flex gap-2 bg-pink-50 rounded-3xl p-1.5">
+        <button id="btn-dream" onclick="setMode('dream')" class="mode-btn" style="background:linear-gradient(135deg,#f9a8d4,#f472b6);color:#fff;box-shadow:0 4px 14px rgba(244,114,182,.4);">🌸 夢見がちモード</button>
+        <button id="btn-real"  onclick="setMode('real')"  class="mode-btn bg-transparent text-pink-300">😱 現実直視モード</button>
     </div>
-    <p id="mode-desc" class="text-[11px] text-pink-700 bg-pink-50 border border-pink-100 rounded-xl px-3 py-2 text-center leading-relaxed">各項目が<strong>初期見積もり最低ライン</strong>に設定されています 🌸</p>
+    <div id="mode-desc" class="text-center text-xs font-bold text-pink-500 bg-pink-50 rounded-2xl px-4 py-2.5">各項目が <strong>初期見積もりの最低ライン</strong> に設定されています 🌸</div>
 
-    <!-- Guest count + Table size -->
+    <!-- 招待人数 -->
     <div>
         <div class="flex justify-between items-center mb-2">
-            <label class="text-sm font-bold text-gray-700" for="guest-slider">👥 招待人数</label>
+            <label class="font-bold text-gray-700 flex items-center gap-1.5"><span class="text-xl">👥</span>招待人数</label>
             <div class="flex items-center gap-3">
-                <div class="text-right">
-                    <span id="guest-val" class="text-xl font-bold text-gold-600">60</span>
-                    <span class="text-sm text-gray-400">名</span>
-                </div>
-                <div class="flex items-center gap-1.5 bg-gray-50 rounded-lg px-2 py-1 border border-gray-200">
+                <span class="text-2xl font-black text-pink-500" id="guest-val">60</span><span class="text-sm text-gray-400 -ml-2">名</span>
+                <div class="flex items-center gap-1 bg-pink-50 border border-pink-200 rounded-xl px-2 py-1">
                     <span class="text-[10px] text-gray-400">テーブル</span>
-                    <select id="table-size" onchange="calculate()" class="text-xs font-bold text-gray-600 bg-transparent outline-none cursor-pointer">
+                    <select id="table-size" onchange="calculate()" class="text-xs font-bold text-pink-600 bg-transparent outline-none cursor-pointer">
                         <option value="6">6名/卓</option>
                         <option value="7" selected>7名/卓</option>
                         <option value="8">8名/卓</option>
                     </select>
-                    <span class="text-xs font-bold text-gold-600"><span id="table-val">9</span>卓</span>
+                    <span class="text-xs font-black text-pink-500"><span id="table-val">9</span>卓</span>
                 </div>
             </div>
         </div>
-        <input type="range" id="guest-slider" min="20" max="150" step="5" value="60" class="sl w-full" oninput="syncGuests(this); calculate()">
-        <div class="flex justify-between text-[10px] text-gray-400 mt-0.5"><span>20名</span><span>60名</span><span>100名</span><span>150名</span></div>
+        <input type="range" id="guest-slider" min="20" max="150" step="5" value="60" class="sl w-full" oninput="syncGuests(this);calculate()">
+        <div class="flex justify-between text-[10px] text-gray-300 mt-0.5 font-bold"><span>20名</span><span>60名</span><span>100名</span><span>150名</span></div>
     </div>
 
-    <!-- Per-person burden indicator -->
-    <div id="pp-card" class="bg-gray-50 border border-gray-200 rounded-xl p-3">
-        <div class="flex justify-between items-center mb-1.5">
-            <span class="text-xs text-gray-500">1人あたり実質自己負担額（参考）</span>
-            <span id="pp-val" class="text-base font-bold text-gray-700">―</span>
+    <!-- 1人あたり負担インジケーター -->
+    <div id="pp-card" class="bg-pink-50 border-2 border-pink-100 rounded-2xl p-3 space-y-1.5">
+        <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-gray-500">1人あたり実質自己負担額（参考）</span>
+            <span id="pp-val" class="text-base font-black text-gray-700">―</span>
         </div>
-        <div class="w-full bg-gray-200 rounded-full" style="height:6px;">
-            <div id="pp-bar" class="burden-bar bg-green-400" style="width:0%"></div>
+        <div class="w-full bg-pink-100 rounded-full h-2">
+            <div id="pp-bar" class="h-2 rounded-full" style="width:0%;background:#f472b6;transition:width .4s,background .4s;"></div>
         </div>
-        <p id="pp-msg" class="text-[10px] text-gray-400 mt-1.5 text-center"></p>
+        <p id="pp-msg" class="text-[10px] text-center font-bold text-gray-400"></p>
     </div>
 
-    <!-- Contribution type -->
+    <!-- お祝いの形式 -->
     <div>
-        <label class="block text-sm font-bold text-gray-700 mb-1" for="contribution-type">💌 お祝い金の形式</label>
-        <select id="contribution-type" onchange="onContributionChange()" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-gold-400 text-sm bg-white">
-            <option value="30000">ご祝儀制（相場：約3.0万円/人）</option>
+        <label class="block font-bold text-gray-700 text-sm mb-1.5 flex items-center gap-1.5"><span class="text-xl">💌</span>お祝い金の形式</label>
+        <select id="contribution-type" onchange="onContributionChange()" class="w-full px-4 py-2.5 rounded-2xl border-2 border-pink-100 focus:border-pink-300 text-sm bg-white outline-none font-bold text-gray-700">
+            <option value="30000">ご祝儀制（約3.0万円/人）</option>
             <option value="kaihisei" selected>会費制（金額を自分で設定）</option>
-            <option value="0">自己負担（リゾート婚・フォト婚など）</option>
+            <option value="0">自己負担（リゾート婚など）</option>
         </select>
         <div id="kaihisei-custom" class="mt-2 flex items-center gap-2">
-            <span class="text-xs text-gray-500 whitespace-nowrap">1人あたり</span>
-            <input type="number" id="kaihisei-amount" value="24000" step="1000" min="5000" max="50000" oninput="calculate()" class="w-28 px-3 py-1.5 rounded-lg border border-gold-200 focus:ring-2 focus:ring-gold-400 text-sm text-center font-bold text-gold-700">
-            <span class="text-xs text-gray-500">円</span>
-            <span class="text-[10px] bg-gold-50 text-gold-600 font-medium px-2 py-0.5 rounded-full">相場：2〜3万円</span>
+            <span class="text-xs text-gray-400 font-bold whitespace-nowrap">1人あたり</span>
+            <input type="number" id="kaihisei-amount" value="24000" step="1000" min="5000" max="50000" oninput="calculate()" class="w-28 px-3 py-1.5 rounded-xl border-2 border-pink-200 focus:border-pink-400 text-sm text-center font-black text-pink-600 outline-none">
+            <span class="text-xs text-gray-400 font-bold">円</span>
+            <span class="text-[10px] bg-mint-100 text-mint-500 font-bold px-2 py-0.5 rounded-full">相場：2〜3万円</span>
         </div>
     </div>
 </div>
 
-<!-- ===== DASHBOARD ===== -->
-<section class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-5 rounded-2xl shadow-xl">
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
-        <div class="bg-slate-800/60 rounded-xl p-3 border border-slate-700/50 text-center">
-            <p class="text-[10px] text-slate-400 tracking-wider mb-1">式場費用（税込）</p>
-            <p id="kpi-venue" class="text-base md:text-lg font-bold text-white">0円</p>
+<!-- ===== RESULT DASHBOARD ===== -->
+<div class="rounded-3xl overflow-hidden shadow-lg" style="background:linear-gradient(135deg,#fdf2f8 0%,#f0fdf9 50%,#fffbeb 100%);">
+    <div class="p-5 space-y-4">
+        <div class="text-center">
+            <p class="text-xs font-bold text-gray-400 tracking-widest mb-1">あなたの結婚式✨</p>
+            <h2 class="font-black text-gray-800 text-lg">リアルシミュレーション結果</h2>
         </div>
-        <div class="bg-slate-800/60 rounded-xl p-3 border border-slate-700/50 text-center">
-            <p class="text-[10px] text-green-400 tracking-wider mb-1">ゲスト回収額（-）</p>
-            <p id="kpi-goshugi" class="text-base md:text-lg font-bold text-green-300">0円</p>
+
+        <div class="grid grid-cols-2 gap-3">
+            <div class="bg-white/70 rounded-2xl p-3 text-center border-2 border-pink-100">
+                <p class="text-[10px] font-bold text-gray-400 mb-0.5">式場費用（税込）</p>
+                <p id="kpi-venue" class="text-base font-black text-gray-700">0円</p>
+            </div>
+            <div class="bg-white/70 rounded-2xl p-3 text-center border-2 border-mint-100">
+                <p class="text-[10px] font-bold text-mint-400 mb-0.5">ゲスト回収額（▼）</p>
+                <p id="kpi-goshugi" class="text-base font-black text-mint-500">0円</p>
+            </div>
         </div>
-        <div class="col-span-2 md:col-span-1 bg-slate-800/80 rounded-xl p-3 border border-gold-500/30 text-center">
-            <p class="text-[10px] text-gold-300 tracking-wider font-bold mb-1">実質自己負担額</p>
-            <p id="kpi-burden" class="text-2xl md:text-3xl font-bold text-gold-400 tr">0円</p>
+
+        <div class="bg-white rounded-3xl p-4 text-center border-2 border-pink-200 shadow-sm">
+            <p class="text-xs font-black text-pink-400 mb-1">💸 実質 自己負担額</p>
+            <p id="kpi-burden" class="text-4xl font-black text-pink-500 bounce">0円</p>
+            <p class="text-[10px] text-gray-400 mt-1">式場税込合計 + 指輪 − ゲスト回収額</p>
+        </div>
+
+        <!-- 内訳 -->
+        <details>
+            <summary class="text-xs font-bold text-gray-400 flex items-center gap-1 select-none hover:text-pink-400 transition-colors pb-1">
+                <span>▶</span> 費用の内訳・税計算の詳細
+            </summary>
+            <div class="space-y-1 pt-2 text-xs font-bold">
+                <div class="flex justify-between text-gray-600"><span>🍽️ 料理・飲物・ケーキ</span><span id="bd-food">―</span></div>
+                <div class="flex justify-between text-gray-600"><span>🌸 装花・ブーケ</span><span id="bd-flower">―</span></div>
+                <div class="flex justify-between text-gray-600"><span>👗 衣装・美容</span><span id="bd-attire">―</span></div>
+                <div class="flex justify-between text-gray-600"><span>📸 写真・映像</span><span id="bd-photo">―</span></div>
+                <div class="flex justify-between text-gray-600"><span>🎁 引出物・雑費・会場費</span><span id="bd-misc">―</span></div>
+                <div class="flex justify-between text-mint-500"><span>✂️ 純節約額</span><span id="bd-savings">―</span></div>
+                <div class="flex justify-between text-orange-400 text-[10px]"><span>　└ 持ち込み料ペナルティ</span><span id="bd-mochikomi">―</span></div>
+                <div class="flex justify-between text-gray-800 border-t border-gray-100 pt-1 mt-1"><span>式場小計（税抜）</span><span id="bd-subtotal">―</span></div>
+                <div class="flex justify-between text-yel-500"><span>サービス料（+10%）</span><span id="bd-service">―</span></div>
+                <div class="flex justify-between text-yel-500"><span>消費税（+10%）</span><span id="bd-tax">―</span></div>
+                <div class="flex justify-between text-gray-800 border-t border-gray-100 pt-1 mt-1 font-black"><span>式場税込合計</span><span id="bd-venue-total">―</span></div>
+                <div class="flex justify-between text-gray-600"><span>💍 結婚指輪（別途・サービス料対象外）</span><span id="bd-ring">―</span></div>
+                <div class="flex justify-between text-gray-800 font-black border-t border-gray-100 pt-1 mt-1"><span>全体合計</span><span id="bd-grand">―</span></div>
+                <div class="flex justify-between text-mint-500"><span>ゲスト回収額（▼）</span><span id="bd-goshugi">―</span></div>
+                <div class="flex justify-between text-pink-500 font-black text-sm border-t-2 border-pink-100 pt-1.5 mt-1"><span>💸 実質自己負担額</span><span id="bd-burden">―</span></div>
+            </div>
+        </details>
+
+        <div class="bg-white/60 rounded-2xl p-3 border border-pink-100">
+            <p class="text-[10px] font-bold text-gray-500 leading-relaxed">📊 <strong class="text-pink-600">先輩花嫁のリアル：</strong>初期見積もりから最終費用は平均 <strong>＋80〜120万円</strong> 上昇。料理65%・衣装62%・写真50%・装花43%が値上がりを経験しています。</p>
+        </div>
+
+        <!-- シェアボタン -->
+        <div class="flex gap-2 flex-wrap">
+            <button onclick="shareToTwitter()" class="flex-1 flex items-center justify-center gap-1.5 bg-[#1d9bf0] text-white text-xs font-black py-2.5 px-3 rounded-2xl hover:bg-[#1a8cd8] transition-all">🐦 Xでシェア</button>
+            <button onclick="copyResult()" class="flex-1 flex items-center justify-center gap-1.5 bg-gray-100 text-gray-600 text-xs font-black py-2.5 px-3 rounded-2xl hover:bg-gray-200 transition-all"><span id="copyBtnText">📋 コピー</span></button>
+            <button onclick="saveAsImage()" class="flex-1 flex items-center justify-center gap-1.5 bg-pink-100 text-pink-600 text-xs font-black py-2.5 px-3 rounded-2xl hover:bg-pink-200 transition-all"><span id="saveImageBtnText">📸 画像保存</span></button>
         </div>
     </div>
 
-    <details>
-        <summary class="text-xs text-slate-400 cursor-pointer hover:text-slate-200 tr flex items-center gap-1.5 select-none pb-2">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            費用の内訳・税計算の詳細を見る
-        </summary>
-        <div class="space-y-1 text-xs border-t border-slate-700/40 pt-3 mt-1">
-            <div class="grid grid-cols-2 text-slate-300"><span>🍽️ 料理・飲物・ケーキ</span><span id="bd-food" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 text-slate-300"><span>🌸 装花・ブーケ</span><span id="bd-flower" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 text-slate-300"><span>👗 衣装・美容（超過・お色直し含む）</span><span id="bd-attire" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 text-slate-300"><span>📸 写真・映像</span><span id="bd-photo" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 text-slate-300"><span>🎁 引出物・雑費・基本会場費</span><span id="bd-misc" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 text-amber-300"><span>✂️ 節約（持ち込み料控除後の純節約額）</span><span id="bd-savings" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 text-orange-300 text-[10px]"><span>　└ うち 持ち込み料ペナルティ</span><span id="bd-mochikomi" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 font-bold text-white border-t border-slate-600 pt-1 mt-1"><span>式場小計（税抜）</span><span id="bd-subtotal" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 text-amber-300"><span>サービス料（＋10%）</span><span id="bd-service" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 text-amber-300"><span>消費税（＋10%）</span><span id="bd-tax" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 font-bold text-white border-t border-gold-500/30 pt-1 mt-1"><span>式場費用合計（税込）</span><span id="bd-venue-total" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 text-slate-300"><span>💍 結婚指輪（別途・サービス料対象外）</span><span id="bd-ring" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 font-bold text-white border-t border-slate-600 pt-1 mt-1"><span>全体合計</span><span id="bd-grand" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 text-green-300"><span>ゲスト回収額（-）</span><span id="bd-goshugi" class="text-right">―</span></div>
-            <div class="grid grid-cols-2 font-bold text-gold-300 border-t border-gold-500/40 pt-1.5 mt-1 text-sm"><span>✨ 実質自己負担額</span><span id="bd-burden" class="text-right">―</span></div>
-        </div>
-    </details>
-
-    <div class="mt-3 pt-3 border-t border-slate-700/40 flex items-start gap-2">
-        <span class="bg-red-500/20 border border-red-500/50 text-red-300 text-[10px] font-bold px-1.5 py-0.5 rounded whitespace-nowrap mt-0.5">先輩花嫁のリアル</span>
-        <p class="text-[11px] text-slate-300 leading-relaxed">初期見積もりから最終費用は <strong class="text-white">平均 ＋80万〜120万円</strong> 上昇。料理65%・衣装62%・写真50%・装花43%が値上がりを経験しています。</p>
+    <!-- PR：結果直下の広告枠 -->
+    <div class="border-t border-pink-100 bg-white/50 px-5 py-4 space-y-2">
+        <p class="text-[10px] font-black text-gray-400 text-center mb-2">💡 賢く節約！おすすめサービス</p>
+        <a href="https://toki-hana.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','pr_click',{service:'tokihana',location:'dashboard'})" class="pr-btn group">
+            <span class="emo-big">👰‍♀️</span>
+            <div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">持ち込み料0円の式場を探す</p><p class="text-[11px] text-gray-400">トキハナ｜元プランナーが無料で交渉代行</p></div>
+            <span class="text-pink-400 font-black">→</span>
+            <span class="pr-badge">※PR</span>
+        </a>
+        <a href="https://www.brilliance-plus.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','pr_click',{service:'brilliance',location:'dashboard'})" class="pr-btn group">
+            <span class="emo-big">💍</span>
+            <div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">人気ブランド指輪の無料相談はこちら</p><p class="text-[11px] text-gray-400">BRILLIANCE+｜オンライン完結・コスパ最強</p></div>
+            <span class="text-pink-400 font-black">→</span>
+            <span class="pr-badge">※PR</span>
+        </a>
+        <a href="https://hanayume.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','pr_click',{service:'hanayume',location:'dashboard'})" class="pr-btn group">
+            <span class="emo-big">🌸</span>
+            <div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">式場フェアを無料予約してギフトGetしよう</p><p class="text-[11px] text-gray-400">ハナユメ｜フェア参加特典あり</p></div>
+            <span class="text-pink-400 font-black">→</span>
+            <span class="pr-badge">※PR</span>
+        </a>
     </div>
-    <div class="flex gap-2 flex-wrap mt-3">
-        <button onclick="shareToTwitter()" class="tr flex items-center gap-1.5 bg-[#1d9bf0]/20 hover:bg-[#1d9bf0]/30 border border-[#1d9bf0]/40 text-[#7dd3fc] text-xs font-bold px-3 py-1.5 rounded-lg">
-            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>X でシェア
-        </button>
-        <button onclick="copyResult()" class="tr flex items-center gap-1.5 bg-slate-700/60 hover:bg-slate-600/60 border border-slate-600/50 text-slate-300 text-xs font-bold px-3 py-1.5 rounded-lg">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-            <span id="copyBtnText">結果をコピー</span>
-        </button>
-        <button onclick="saveAsImage()" class="tr flex items-center gap-1.5 bg-gold-500/20 hover:bg-gold-500/30 border border-gold-500/40 text-gold-300 text-xs font-bold px-3 py-1.5 rounded-lg">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span id="saveImageBtnText">画像で保存</span>
-        </button>
-    </div>
-</section>
+</div>
 
-<!-- ===== TAB NAV ===== -->
-<div class="flex border-b border-gold-100 justify-start md:justify-center space-x-1 overflow-x-auto whitespace-nowrap px-1 pb-px">
-    <button onclick="switchTab('food')"      id="tab-food"      class="pb-2 border-b-2 border-gold-500 text-gold-700 font-bold text-xs px-2.5 tr">料理・飲物</button>
-    <button onclick="switchTab('decor')"     id="tab-decor"     class="pb-2 border-b-2 border-transparent text-gray-400 hover:text-gold-600 text-xs px-2.5 tr">装花・衣装</button>
-    <button onclick="switchTab('photo')"     id="tab-photo"     class="pb-2 border-b-2 border-transparent text-gray-400 hover:text-gold-600 text-xs px-2.5 tr">写真・その他</button>
-    <button onclick="switchTab('saving')"    id="tab-saving"    class="pb-2 border-b-2 border-transparent text-gray-400 hover:text-gold-600 text-xs px-2.5 tr">節約・指輪</button>
-    <button onclick="switchTab('affiliate')" id="tab-affiliate" class="pb-2 border-b-2 border-transparent text-gray-400 hover:text-gold-600 text-xs px-2.5 tr">💰 サービス</button>
+<!-- ===== TABS ===== -->
+<div class="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+    <button onclick="switchTab('food')"      id="tab-food"      class="pill-tab active">🍽️ 料理・飲物</button>
+    <button onclick="switchTab('decor')"     id="tab-decor"     class="pill-tab">🌸 装花・衣装</button>
+    <button onclick="switchTab('photo')"     id="tab-photo"     class="pill-tab">📸 写真・その他</button>
+    <button onclick="switchTab('saving')"    id="tab-saving"    class="pill-tab">✂️ 節約・指輪</button>
+    <button onclick="switchTab('affiliate')" id="tab-affiliate" class="pill-tab">💰 サービス一覧</button>
 </div>
 
 <!-- ===== TAB 1: 料理・飲物 ===== -->
 <div id="section-food" class="space-y-4">
-<div class="bg-white p-5 rounded-2xl sc border border-gold-50 space-y-6">
-    <div>
-        <h2 class="text-sm font-bold border-l-4 border-red-400 pl-2 mb-1">🍽️ 料理・飲物・ケーキ</h2>
-        <p class="text-[11px] text-gray-400">ゲスト人数に直比例する最重要項目。<strong class="text-red-500">約65%</strong>の人が料理で値上がりを経験。</p>
+
+<div class="card space-y-5">
+    <div class="flex items-center gap-3 pb-2 border-b-2 border-pink-50">
+        <span class="emo-big">🍽️</span>
+        <div><h2 class="font-black text-gray-800">料理・飲物・ケーキ</h2><p class="text-[11px] text-gray-400 font-bold">ゲスト人数に直比例する最重要項目 / 約65%が値上がりを経験</p></div>
     </div>
 
-    <!-- 料理スライダー -->
-    <div class="space-y-1.5">
+    <div class="space-y-1">
         <div class="flex justify-between items-start">
-            <label class="text-sm font-semibold text-gray-800">料理（1人あたり・基本ランク）</label>
-            <div class="text-right"><span id="food-val" class="text-xl font-bold text-gold-600">10,500</span><span class="text-xs text-gray-400">円/人</span><br><span class="text-[11px] text-gray-400">合計 </span><span id="food-total" class="text-xs font-bold text-gray-700">630,000円</span></div>
+            <label class="font-bold text-sm text-gray-700">料理（1人あたり・基本ランク）</label>
+            <div class="text-right"><span id="food-val" class="text-xl font-black text-pink-500">10,500</span><span class="text-xs text-gray-400">円/人</span><br><span class="text-[10px] text-gray-400">合計</span><span id="food-total" class="text-xs font-black text-gray-600 ml-0.5"></span></div>
         </div>
-        <input type="range" id="food-slider" min="10000" max="20000" step="500" value="10500" class="sl w-full" oninput="syncSlider('food-val',this); calculate()">
-        <div class="flex justify-between text-[10px]">
-            <span class="text-blue-500 font-medium">初期: 10,000円</span>
-            <span class="text-amber-500 font-medium">平均: 14,000円</span>
-            <span class="text-red-400 font-medium">MAX: 20,000円</span>
-        </div>
-        <p class="text-[11px] text-gray-400 bg-gray-50 rounded-lg px-2 py-1.5">最低ランクは豚肉・鶏肉メイン。牛肉・オマール海老への変更、パン食べ放題追加で確実に単価が上がる。</p>
+        <input type="range" id="food-slider" min="10000" max="20000" step="500" value="10500" class="sl w-full" oninput="syncSlider('food-val',this);calculate()">
+        <div class="flex justify-between text-[10px] font-bold"><span class="text-blue-400">初期:10,000円</span><span class="text-yel-500">平均:14,000円</span><span class="text-red-400">MAX:20,000円</span></div>
+        <p class="text-[11px] text-gray-400 bg-gray-50 rounded-xl px-3 py-2">最低ランクは豚肉・鶏肉メイン。牛肉・オマール海老への変更で確実に単価UP🔺</p>
     </div>
 
-    <!-- 料理追加オプション -->
-    <div class="bg-red-50 border border-red-100 rounded-xl p-3 space-y-2">
-        <p class="text-[11px] font-bold text-red-700">🆙 料理ランクアップオプション（約65%が経験）</p>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-main-rankup" onchange="calculate()" class="w-4 h-4 text-red-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <div><p class="text-sm text-gray-700 font-medium">メイン料理を牛肉・海老へランクアップ</p><p class="text-[10px] text-gray-400">1人あたり +2,500円（+2,000〜3,000円の中央値）</p></div>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+<span class="chk-food-add" id="lbl-mainup">150,000</span>円</span>
-            </div>
+    <div class="bg-red-50 border-2 border-red-100 rounded-2xl p-3 space-y-1">
+        <p class="text-xs font-black text-red-500 mb-2">🆙 料理ランクアップオプション（約65%が経験）</p>
+        <label class="chk-row">
+            <input type="checkbox" id="chk-main-rankup" onchange="calculate()">
+            <div class="flex-1 flex justify-between items-center"><div><p class="text-sm font-bold text-gray-700">メイン料理を牛肉・海老へランクアップ</p><p class="text-[10px] text-gray-400">+2,500円/人（+2,000〜3,000円）</p></div><span class="text-xs font-black text-red-400 ml-2">+<span id="lbl-mainup">150,000</span>円</span></div>
         </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-dessert" onchange="calculate()" class="w-4 h-4 text-red-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <div><p class="text-sm text-gray-700 font-medium">デザートビュッフェ追加</p><p class="text-[10px] text-gray-400">1人あたり +1,750円（+1,500〜2,000円の中央値）</p></div>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+<span id="lbl-dessert">105,000</span>円</span>
-            </div>
+        <label class="chk-row">
+            <input type="checkbox" id="chk-dessert" onchange="calculate()">
+            <div class="flex-1 flex justify-between items-center"><div><p class="text-sm font-bold text-gray-700">デザートビュッフェ追加</p><p class="text-[10px] text-gray-400">+1,750円/人（+1,500〜2,000円）</p></div><span class="text-xs font-black text-red-400 ml-2">+<span id="lbl-dessert">105,000</span>円</span></div>
         </label>
     </div>
 
-    <!-- 飲物スライダー -->
-    <div class="space-y-1.5">
+    <div class="space-y-1">
         <div class="flex justify-between items-start">
-            <label class="text-sm font-semibold text-gray-800">飲物・フリードリンク（1人あたり）</label>
-            <div class="text-right"><span id="drink-val" class="text-xl font-bold text-gold-600">4,200</span><span class="text-xs text-gray-400">円/人</span><br><span class="text-[11px] text-gray-400">合計 </span><span id="drink-total" class="text-xs font-bold text-gray-700">252,000円</span></div>
+            <label class="font-bold text-sm text-gray-700">飲物・フリードリンク（1人あたり）</label>
+            <div class="text-right"><span id="drink-val" class="text-xl font-black text-pink-500">4,200</span><span class="text-xs text-gray-400">円/人</span><br><span class="text-[10px] text-gray-400">合計</span><span id="drink-total" class="text-xs font-black text-gray-600 ml-0.5"></span></div>
         </div>
-        <input type="range" id="drink-slider" min="4000" max="6000" step="200" value="4200" class="sl w-full" oninput="syncSlider('drink-val',this); calculate()">
-        <div class="flex justify-between text-[10px]">
-            <span class="text-blue-500 font-medium">初期: 4,000円</span>
-            <span class="text-amber-500 font-medium">平均: 5,500円</span>
-            <span class="text-red-400 font-medium">MAX: 6,000円</span>
-        </div>
+        <input type="range" id="drink-slider" min="4000" max="6000" step="200" value="4200" class="sl w-full" oninput="syncSlider('drink-val',this);calculate()">
+        <div class="flex justify-between text-[10px] font-bold"><span class="text-blue-400">初期:4,000円</span><span class="text-yel-500">平均:5,500円</span><span class="text-red-400">MAX:6,000円</span></div>
     </div>
 
-    <!-- 飲物オプション -->
-    <div class="bg-amber-50 border border-amber-100 rounded-xl p-3 space-y-2">
-        <p class="text-[11px] font-bold text-amber-700">🥂 後乗せトラップ（約34%が経験・初期見積もり外）</p>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-cocktail" onchange="calculate()" class="w-4 h-4 text-amber-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <div><p class="text-sm text-gray-700">カクテル・地酒・ノンアルコール追加</p><p class="text-[10px] text-gray-400">1人あたり +1,500円</p></div>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+<span id="lbl-cocktail">90,000</span>円</span>
-            </div>
+    <div class="bg-yel-50 border-2 border-yel-100 rounded-2xl p-3 space-y-1">
+        <p class="text-xs font-black text-yel-500 mb-2">🥂 後乗せトラップ（約34%が経験）</p>
+        <label class="chk-row">
+            <input type="checkbox" id="chk-cocktail" onchange="calculate()">
+            <div class="flex-1 flex justify-between items-center"><div><p class="text-sm font-bold text-gray-700">カクテル・地酒・ノンアルコール追加</p><p class="text-[10px] text-gray-400">+1,500円/人</p></div><span class="text-xs font-black text-red-400 ml-2">+<span id="lbl-cocktail">90,000</span>円</span></div>
         </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-champagne" onchange="calculate()" class="w-4 h-4 text-amber-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <div><p class="text-sm text-gray-700">乾杯用シャンパン（別料金で後乗せが定番）</p><p class="text-[10px] text-gray-400">1人あたり +1,000円（+800〜1,200円）</p></div>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+<span id="lbl-champagne">60,000</span>円</span>
-            </div>
+        <label class="chk-row">
+            <input type="checkbox" id="chk-champagne" onchange="calculate()">
+            <div class="flex-1 flex justify-between items-center"><div><p class="text-sm font-bold text-gray-700">乾杯用シャンパン（別料金で後乗せが定番😱）</p><p class="text-[10px] text-gray-400">+1,000円/人（+800〜1,200円）</p></div><span class="text-xs font-black text-red-400 ml-2">+<span id="lbl-champagne">60,000</span>円</span></div>
         </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-welcome-drink" onchange="calculate()" class="w-4 h-4 text-amber-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <div><p class="text-sm text-gray-700">ウェルカムドリンク</p><p class="text-[10px] text-gray-400">1人あたり +1,300円</p></div>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+<span id="lbl-welcome">78,000</span>円</span>
-            </div>
+        <label class="chk-row">
+            <input type="checkbox" id="chk-welcome-drink" onchange="calculate()">
+            <div class="flex-1 flex justify-between items-center"><div><p class="text-sm font-bold text-gray-700">ウェルカムドリンク</p><p class="text-[10px] text-gray-400">+1,300円/人</p></div><span class="text-xs font-black text-red-400 ml-2">+<span id="lbl-welcome">78,000</span>円</span></div>
         </label>
     </div>
 
-    <!-- ケーキ -->
-    <div class="space-y-1.5">
+    <div class="space-y-1">
         <div class="flex justify-between items-start">
-            <label class="text-sm font-semibold text-gray-800">ウェディングケーキ（1人あたり）</label>
-            <div class="text-right"><span id="cake-val" class="text-xl font-bold text-gold-600">750</span><span class="text-xs text-gray-400">円/人</span><br><span class="text-[11px] text-gray-400">合計 </span><span id="cake-total" class="text-xs font-bold text-gray-700">45,000円</span></div>
+            <label class="font-bold text-sm text-gray-700">ウェディングケーキ（1人あたり）</label>
+            <div class="text-right"><span id="cake-val" class="text-xl font-black text-pink-500">750</span><span class="text-xs text-gray-400">円/人</span><br><span class="text-[10px] text-gray-400">合計</span><span id="cake-total" class="text-xs font-black text-gray-600 ml-0.5"></span></div>
         </div>
-        <input type="range" id="cake-slider" min="500" max="1500" step="100" value="750" class="sl w-full" oninput="syncSlider('cake-val',this); calculate()">
-        <div class="flex justify-between text-[10px]">
-            <span class="text-blue-500 font-medium">初期: 500円</span>
-            <span class="text-amber-500 font-medium">平均: 1,300円</span>
-            <span class="text-red-400 font-medium">MAX: 1,500円</span>
-        </div>
+        <input type="range" id="cake-slider" min="500" max="1500" step="100" value="750" class="sl w-full" oninput="syncSlider('cake-val',this);calculate()">
+        <div class="flex justify-between text-[10px] font-bold"><span class="text-blue-400">初期:500円</span><span class="text-yel-500">平均:1,300円</span><span class="text-red-400">MAX:1,500円</span></div>
     </div>
+</div>
+
+<!-- PR枠（タブ1下） -->
+<div class="card space-y-2">
+    <p class="text-[10px] font-black text-gray-400 text-center">✨ 関連おすすめサービス</p>
+    <a href="https://toki-hana.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','pr_click',{service:'tokihana',location:'tab_food'})" class="pr-btn group">
+        <span class="emo-big">🏛️</span>
+        <div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">料理・ドリンクの持ち込み料0円の式場を探す</p><p class="text-[11px] text-gray-400">トキハナ｜元プランナーが値引き交渉を代行</p></div>
+        <span class="text-pink-400 font-black">→</span>
+        <span class="pr-badge">※PR</span>
+    </a>
 </div>
 </div>
 
 <!-- ===== TAB 2: 装花・衣装 ===== -->
 <div id="section-decor" class="space-y-4 hidden">
 
-<div class="bg-white p-5 rounded-2xl sc border border-gold-50 space-y-6">
-    <div>
-        <h2 class="text-sm font-bold border-l-4 border-pink-400 pl-2 mb-1">🌸 装花（約43%が値上がりを経験）</h2>
-        <p class="text-[11px] text-gray-400">初期の装花は最低限。SNS映えを求めると確実に倍以上になる。</p>
+<div class="card space-y-5">
+    <div class="flex items-center gap-3 pb-2 border-b-2 border-pink-50">
+        <span class="emo-big">🌸</span>
+        <div><h2 class="font-black text-gray-800">装花</h2><p class="text-[11px] text-gray-400 font-bold">約43%が値上がりを経験 / 初期装花は最低限ですよ😅</p></div>
     </div>
 
-    <div class="space-y-1.5">
+    <div class="space-y-1">
         <div class="flex justify-between items-start">
-            <label class="text-sm font-semibold text-gray-800">メインテーブル（高砂）装花</label>
-            <span id="hightable-val" class="text-xl font-bold text-gold-600">65,000</span><span class="text-xs text-gray-400">円</span>
+            <label class="font-bold text-sm text-gray-700">メインテーブル（高砂）装花</label>
+            <span id="hightable-val" class="text-xl font-black text-pink-500">65,000</span><span class="text-xs text-gray-400">円</span>
         </div>
-        <input type="range" id="hightable-slider" min="55000" max="220000" step="5000" value="65000" class="sl w-full" oninput="syncSlider('hightable-val',this); calculate()">
-        <div class="flex justify-between text-[10px]">
-            <span class="text-blue-500 font-medium">初期: 55,000円</span>
-            <span class="text-amber-500 font-medium">平均: 135,000円</span>
-            <span class="text-red-400 font-medium">MAX: 200,000円+</span>
-        </div>
-        <p class="text-[11px] text-gray-400 bg-gray-50 rounded-lg px-2 py-1.5">5万円台では寂しい状態。ソファ席・アーチ・グリーン多めで一気に倍以上に。</p>
+        <input type="range" id="hightable-slider" min="55000" max="220000" step="5000" value="65000" class="sl w-full" oninput="syncSlider('hightable-val',this);calculate()">
+        <div class="flex justify-between text-[10px] font-bold"><span class="text-blue-400">初期:55,000円</span><span class="text-yel-500">平均:135,000円</span><span class="text-red-400">MAX:200,000円+</span></div>
+        <p class="text-[11px] text-gray-400 bg-gray-50 rounded-xl px-3 py-2">5万円台では寂しい印象。ソファ席・アーチ・グリーン多めにすると一気に倍以上に🌿</p>
     </div>
 
-    <div class="space-y-1.5">
+    <div class="space-y-1">
         <div class="flex justify-between items-start">
-            <label class="text-sm font-semibold text-gray-800">ゲストテーブル装花（1卓あたり）</label>
-            <div class="text-right"><span id="guesttable-val" class="text-xl font-bold text-gold-600">6,500</span><span class="text-xs text-gray-400">円/卓</span><br><span class="text-[11px] text-gray-400">× <span id="table-count-display">9</span>卓 = </span><span id="guesttable-total" class="text-xs font-bold text-gray-700">58,500円</span></div>
+            <label class="font-bold text-sm text-gray-700">ゲストテーブル装花（1卓あたり）</label>
+            <div class="text-right"><span id="guesttable-val" class="text-xl font-black text-pink-500">6,500</span><span class="text-xs text-gray-400">円/卓</span><br><span class="text-[10px] text-gray-400">×<span id="table-count-display">9</span>卓 = </span><span id="guesttable-total" class="text-xs font-black text-gray-600"></span></div>
         </div>
-        <input type="range" id="guesttable-slider" min="6000" max="12000" step="500" value="6500" class="sl w-full" oninput="syncSlider('guesttable-val',this); calculate()">
-        <div class="flex justify-between text-[10px]">
-            <span class="text-blue-500 font-medium">初期: 6,000円</span>
-            <span class="text-amber-500 font-medium">平均: 9,500円</span>
-            <span class="text-red-400 font-medium">MAX: 12,000円</span>
-        </div>
-        <p class="text-[11px] text-gray-400 bg-gray-50 rounded-lg px-2 py-1.5">テーブル数は「招待人数 ÷ テーブルサイズ」で自動計算されます。</p>
+        <input type="range" id="guesttable-slider" min="6000" max="12000" step="500" value="6500" class="sl w-full" oninput="syncSlider('guesttable-val',this);calculate()">
+        <div class="flex justify-between text-[10px] font-bold"><span class="text-blue-400">初期:6,000円</span><span class="text-yel-500">平均:9,500円</span><span class="text-red-400">MAX:12,000円</span></div>
     </div>
 
-    <!-- ボリュームアップ追加オプション -->
-    <div class="bg-pink-50 border border-pink-100 rounded-xl p-3 space-y-2">
-        <p class="text-[11px] font-bold text-pink-700">💐 装花追加オプション</p>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-table-vol" onchange="calculate()" class="w-4 h-4 text-pink-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <div><p class="text-sm text-gray-700">ゲストテーブルをボリュームアップ（スライダー値に +3,500円/卓）</p><p class="text-[10px] text-gray-400">ブライダルフェア同等の華やかさにするための最低ライン</p></div>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+<span id="lbl-table-vol">31,500</span>円</span>
-            </div>
+    <div class="bg-pink-50 border-2 border-pink-100 rounded-2xl p-3 space-y-1">
+        <p class="text-xs font-black text-pink-500 mb-2">💐 装花追加オプション</p>
+        <label class="chk-row">
+            <input type="checkbox" id="chk-table-vol" onchange="calculate()">
+            <div class="flex-1 flex justify-between items-center"><div><p class="text-sm font-bold text-gray-700">ゲストテーブルをボリュームアップ（+3,500円/卓）</p><p class="text-[10px] text-gray-400">ブライダルフェア同等の華やかさにするための最低ライン</p></div><span class="text-xs font-black text-red-400 ml-2">+<span id="lbl-table-vol">31,500</span>円</span></div>
         </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-bouquet-extra" onchange="calculate()" class="w-4 h-4 text-pink-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <div><p class="text-sm text-gray-700">カラードレス（お色直し）用ブーケを追加</p><p class="text-[10px] text-gray-400">初期見積もりにはドレス用1個のみ含まれる</p></div>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+55,000円</span>
-            </div>
+        <label class="chk-row">
+            <input type="checkbox" id="chk-bouquet-extra" onchange="calculate()">
+            <div class="flex-1 flex justify-between items-center"><div><p class="text-sm font-bold text-gray-700">お色直し用ブーケを追加</p><p class="text-[10px] text-gray-400">初期見積もりはドレス用1個のみ</p></div><span class="text-xs font-black text-red-400 ml-2">+55,000円</span></div>
         </label>
     </div>
 </div>
 
-<div class="bg-white p-5 rounded-2xl sc border border-gold-50 space-y-6">
-    <div>
-        <h2 class="text-sm font-bold border-l-4 border-purple-400 pl-2 mb-1">👗 衣装（約62%が値上がりを経験）</h2>
-        <p class="text-[11px] text-gray-400">「衣装枠〇〇万円まで」でも好みのドレスがプラン内に収まることはほぼない。</p>
+<div class="card space-y-5">
+    <div class="flex items-center gap-3 pb-2 border-b-2 border-pink-50">
+        <span class="emo-big">👗</span>
+        <div><h2 class="font-black text-gray-800">衣装</h2><p class="text-[11px] text-gray-400 font-bold">約62%が値上がりを経験 / プラン内ドレスで妥協する人は少数派😭</p></div>
     </div>
 
-    <!-- プラン外ドレス超過 -->
-    <div class="space-y-1.5">
+    <div class="space-y-1">
         <div class="flex justify-between items-start">
-            <label class="text-sm font-semibold text-gray-800">プラン外ドレス超過料金</label>
-            <span id="dress-val" class="text-xl font-bold text-gold-600">0</span><span class="text-xs text-gray-400">円</span>
+            <label class="font-bold text-sm text-gray-700">プラン外ドレス超過料金</label>
+            <span id="dress-val" class="text-xl font-black text-pink-500">0</span><span class="text-xs text-gray-400">円</span>
         </div>
-        <input type="range" id="dress-slider" min="0" max="200000" step="10000" value="0" class="sl w-full" oninput="syncSlider('dress-val',this); calculate()">
-        <div class="flex justify-between text-[10px]">
-            <span class="text-blue-500 font-medium">なし: 0円</span>
-            <span class="text-amber-500 font-medium">平均: 150,000円</span>
-            <span class="text-red-400 font-medium">MAX: 200,000円</span>
-        </div>
-        <p class="text-[11px] text-gray-400 bg-gray-50 rounded-lg px-2 py-1.5">「プラン外ドレス超過料金」として見積もりに既に記載があるケースも。</p>
+        <input type="range" id="dress-slider" min="0" max="200000" step="10000" value="0" class="sl w-full" oninput="syncSlider('dress-val',this);calculate()">
+        <div class="flex justify-between text-[10px] font-bold"><span class="text-blue-400">なし: 0円</span><span class="text-yel-500">平均: 150,000円</span><span class="text-red-400">MAX: 200,000円</span></div>
     </div>
 
-    <!-- お色直し -->
-    <div class="space-y-1.5">
+    <div class="space-y-1">
         <div class="flex justify-between items-start">
-            <label class="text-sm font-semibold text-gray-800">お色直し（カラードレス）追加</label>
-            <span id="oiro-val" class="text-xl font-bold text-gold-600">0</span><span class="text-xs text-gray-400">円</span>
+            <label class="font-bold text-sm text-gray-700">お色直し（カラードレス）追加</label>
+            <span id="oiro-val" class="text-xl font-black text-pink-500">0</span><span class="text-xs text-gray-400">円</span>
         </div>
-        <input type="range" id="oiro-slider" min="0" max="300000" step="10000" value="0" class="sl w-full" oninput="syncSlider('oiro-val',this); calculate()">
-        <div class="flex justify-between text-[10px]">
-            <span class="text-blue-500 font-medium">なし: 0円</span>
-            <span class="text-amber-500 font-medium">平均: 225,000円</span>
-            <span class="text-red-400 font-medium">MAX: 300,000円</span>
-        </div>
-        <p class="text-[11px] text-gray-400 bg-gray-50 rounded-lg px-2 py-1.5">お色直しはカラードレス費用＋着付け・ヘアチェンジ代込みの総額。</p>
+        <input type="range" id="oiro-slider" min="0" max="300000" step="10000" value="0" class="sl w-full" oninput="syncSlider('oiro-val',this);calculate()">
+        <div class="flex justify-between text-[10px] font-bold"><span class="text-blue-400">なし: 0円</span><span class="text-yel-500">平均: 225,000円</span><span class="text-red-400">MAX: 300,000円</span></div>
+        <p class="text-[11px] text-gray-400 bg-gray-50 rounded-xl px-3 py-2">お色直しはカラードレス費用＋着付け・ヘアチェンジ代込みの総額です👑</p>
     </div>
 
-    <!-- 隠れ必須コスト -->
-    <div class="bg-purple-50 border border-purple-100 rounded-xl p-3 space-y-2">
-        <p class="text-[11px] font-bold text-purple-700">🚨 隠れ必須コスト（初期見積もりに含まれないが実質必須）</p>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-inner" onchange="calculate()" class="w-4 h-4 text-purple-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <span class="text-sm text-gray-700">新婦ブライダルインナー（ドレス専用下着・販売品）</span>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+38,500円</span>
-            </div>
-        </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-groom-hair" onchange="calculate()" class="w-4 h-4 text-purple-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <span class="text-sm text-gray-700">新郎ヘアセット＆メイク代</span>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+7,500円</span>
-            </div>
-        </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-dress-insurance" onchange="calculate()" class="w-4 h-4 text-purple-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <span class="text-sm text-gray-700">衣装の破損保証・保険料</span>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+20,000円</span>
-            </div>
-        </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-groom-set" onchange="calculate()" class="w-4 h-4 text-purple-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <span class="text-sm text-gray-700">新郎シャツ・ネクタイ・小物セット（販売品）</span>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+16,500円</span>
-            </div>
-        </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-rehearsal" onchange="calculate()" class="w-4 h-4 text-purple-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <span class="text-sm text-gray-700">ヘアメイクリハーサル（本番前の必須確認）</span>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+25,000円</span>
-            </div>
-        </label>
+    <div class="bg-purple-50 border-2 border-purple-100 rounded-2xl p-3 space-y-1">
+        <p class="text-xs font-black text-purple-500 mb-2">🚨 隠れ必須コスト（初期見積もりに含まれない！）</p>
+        <label class="chk-row"><input type="checkbox" id="chk-inner" onchange="calculate()"><div class="flex-1 flex justify-between items-center"><span class="text-sm font-bold text-gray-700">新婦ブライダルインナー（ドレス専用下着）</span><span class="text-xs font-black text-red-400 ml-2">+38,500円</span></div></label>
+        <label class="chk-row"><input type="checkbox" id="chk-groom-hair" onchange="calculate()"><div class="flex-1 flex justify-between items-center"><span class="text-sm font-bold text-gray-700">新郎ヘアセット＆メイク代</span><span class="text-xs font-black text-red-400 ml-2">+7,500円</span></div></label>
+        <label class="chk-row"><input type="checkbox" id="chk-dress-insurance" onchange="calculate()"><div class="flex-1 flex justify-between items-center"><span class="text-sm font-bold text-gray-700">衣装の破損保証・保険料</span><span class="text-xs font-black text-red-400 ml-2">+20,000円</span></div></label>
+        <label class="chk-row"><input type="checkbox" id="chk-groom-set" onchange="calculate()"><div class="flex-1 flex justify-between items-center"><span class="text-sm font-bold text-gray-700">新郎シャツ・ネクタイ・小物セット</span><span class="text-xs font-black text-red-400 ml-2">+16,500円</span></div></label>
+        <label class="chk-row"><input type="checkbox" id="chk-rehearsal" onchange="calculate()"><div class="flex-1 flex justify-between items-center"><span class="text-sm font-bold text-gray-700">ヘアメイクリハーサル（本番前の必須確認）</span><span class="text-xs font-black text-red-400 ml-2">+25,000円</span></div></label>
     </div>
+</div>
+
+<!-- PR枠（タブ2下） -->
+<div class="card space-y-2">
+    <p class="text-[10px] font-black text-gray-400 text-center">👗 ドレス・式場探しはこちら</p>
+    <a href="https://toki-hana.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','pr_click',{service:'tokihana',location:'tab_decor'})" class="pr-btn group">
+        <span class="emo-big">👰‍♀️</span>
+        <div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">衣装持ち込み料0円の式場を探す</p><p class="text-[11px] text-gray-400">トキハナ｜持ち込み料ゼロの式場に絞って検索可能</p></div>
+        <span class="text-pink-400 font-black">→</span>
+        <span class="pr-badge">※PR</span>
+    </a>
 </div>
 </div>
 
-<!-- ===== TAB 3: 写真・引出物・その他 ===== -->
+<!-- ===== TAB 3: 写真・その他 ===== -->
 <div id="section-photo" class="space-y-4 hidden">
 
-<div class="bg-white p-5 rounded-2xl sc border border-gold-50 space-y-6">
-    <div>
-        <h2 class="text-sm font-bold border-l-4 border-blue-400 pl-2 mb-1">📸 写真・映像（約50%が値上がりを経験）</h2>
-        <p class="text-[11px] text-gray-400">「データのみ」から記録映像・アルバムへの追加導線で確実に高額化。</p>
+<div class="card space-y-5">
+    <div class="flex items-center gap-3 pb-2 border-b-2 border-pink-50">
+        <span class="emo-big">📸</span>
+        <div><h2 class="font-black text-gray-800">写真・映像</h2><p class="text-[11px] text-gray-400 font-bold">約50%が値上がりを経験 / 「データのみ」から記録映像・アルバムへの追加導線</p></div>
     </div>
 
-    <div class="space-y-1.5">
+    <div class="space-y-1">
         <div class="flex justify-between items-start">
-            <label class="text-sm font-semibold text-gray-800">スナップ写真</label>
-            <span id="photo-val" class="text-xl font-bold text-gold-600">120,000</span><span class="text-xs text-gray-400">円</span>
+            <label class="font-bold text-sm text-gray-700">スナップ写真</label>
+            <span id="photo-val" class="text-xl font-black text-pink-500">120,000</span><span class="text-xs text-gray-400">円</span>
         </div>
-        <input type="range" id="photo-slider" min="100000" max="250000" step="5000" value="120000" class="sl w-full" oninput="syncSlider('photo-val',this); calculate()">
-        <div class="flex justify-between text-[10px]">
-            <span class="text-blue-500 font-medium">初期: 100,000円</span>
-            <span class="text-amber-500 font-medium">平均: 200,000円</span>
-            <span class="text-red-400 font-medium">MAX: 250,000円</span>
-        </div>
+        <input type="range" id="photo-slider" min="100000" max="250000" step="5000" value="120000" class="sl w-full" oninput="syncSlider('photo-val',this);calculate()">
+        <div class="flex justify-between text-[10px] font-bold"><span class="text-blue-400">初期:100,000円</span><span class="text-yel-500">平均:200,000円</span><span class="text-red-400">MAX:250,000円</span></div>
     </div>
 
-    <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 space-y-2">
-        <p class="text-[11px] font-bold text-blue-700">🎬 映像オプション（初期見積もりに含まれないことが多い）</p>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-video" onchange="calculate()" class="w-4 h-4 text-blue-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-start">
-                <div><p class="text-sm text-gray-700 font-medium">記録用ビデオ撮影</p><p class="text-[10px] text-gray-400">挙式・披露宴のフル記録。後から「あの瞬間が…」と後悔しやすい項目。</p></div>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+125,000円</span>
-            </div>
-        </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-endroll" onchange="calculate()" class="w-4 h-4 text-blue-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-start">
-                <div><p class="text-sm text-gray-700 font-medium">撮って出しエンドロールムービー</p><p class="text-[10px] text-gray-400">「映像商品とセットで割引」という条件に組み込まれ実質外しにくい。</p></div>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+175,000円</span>
-            </div>
-        </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1.5 tr">
-            <input type="checkbox" id="chk-album" onchange="calculate()" class="w-4 h-4 text-blue-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-start">
-                <div><p class="text-sm text-gray-700 font-medium">両家贈呈用フォトアルバム</p><p class="text-[10px] text-gray-400">親族へのプレゼントとして購入するケースが非常に多い。</p></div>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+75,000円</span>
-            </div>
-        </label>
+    <div class="bg-blue-50 border-2 border-blue-100 rounded-2xl p-3 space-y-1">
+        <p class="text-xs font-black text-blue-500 mb-2">🎬 映像オプション（初期見積もりに含まれないことが多い）</p>
+        <label class="chk-row"><input type="checkbox" id="chk-video" onchange="calculate()"><div class="flex-1 flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">記録用ビデオ撮影</p><p class="text-[10px] text-gray-400">挙式・披露宴フル記録。後から後悔しやすい💦</p></div><span class="text-xs font-black text-red-400 ml-2">+125,000円</span></div></label>
+        <label class="chk-row"><input type="checkbox" id="chk-endroll" onchange="calculate()"><div class="flex-1 flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">撮って出しエンドロールムービー</p><p class="text-[10px] text-gray-400">映像商品とセットで割引、実質外しにくい</p></div><span class="text-xs font-black text-red-400 ml-2">+175,000円</span></div></label>
+        <label class="chk-row"><input type="checkbox" id="chk-album" onchange="calculate()"><div class="flex-1 flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">両家贈呈用フォトアルバム</p><p class="text-[10px] text-gray-400">親族へのプレゼントとして購入するケースが多い</p></div><span class="text-xs font-black text-red-400 ml-2">+75,000円</span></div></label>
     </div>
 </div>
 
-<div class="bg-white p-5 rounded-2xl sc border border-gold-50 space-y-6">
-    <h2 class="text-sm font-bold border-l-4 border-amber-400 pl-2">🎁 引出物・ゲスト費用・雑費</h2>
+<div class="card space-y-5">
+    <div class="flex items-center gap-3 pb-2 border-b-2 border-pink-50">
+        <span class="emo-big">🎁</span>
+        <div><h2 class="font-black text-gray-800">引出物・雑費・その他</h2></div>
+    </div>
 
-    <div class="space-y-1.5">
+    <div class="space-y-1">
         <div class="flex justify-between items-start">
-            <label class="text-sm font-semibold text-gray-800">引出物・引菓子（1人あたり）</label>
-            <div class="text-right"><span id="gift-val" class="text-xl font-bold text-gold-600">1,200</span><span class="text-xs text-gray-400">円/人</span><br><span class="text-[11px] text-gray-400">合計（袋代500円/人込）</span><span id="gift-total" class="text-xs font-bold text-gray-700"> 102,000円</span></div>
+            <label class="font-bold text-sm text-gray-700">引出物・引菓子（1人あたり）</label>
+            <div class="text-right"><span id="gift-val" class="text-xl font-black text-pink-500">1,200</span><span class="text-xs text-gray-400">円/人</span><br><span class="text-[10px] text-gray-400">袋500円/人込 合計</span><span id="gift-total" class="text-xs font-black text-gray-600 ml-0.5"></span></div>
         </div>
-        <input type="range" id="gift-slider" min="1000" max="5000" step="200" value="1200" class="sl w-full" oninput="syncSlider('gift-val',this); calculate()">
-        <div class="flex justify-between text-[10px]">
-            <span class="text-blue-500 font-medium">最低: 1,000円</span>
-            <span class="text-amber-500 font-medium">平均: 2,000円</span>
-            <span class="text-red-400 font-medium">上司・親族: 5,000円</span>
-        </div>
-        <p class="text-[11px] text-gray-400 bg-gray-50 rounded-lg px-2 py-1.5">ペーパーバッグ代（500円/人）は自動加算。上司・親族への「贈り分け」で平均単価は上がる。</p>
+        <input type="range" id="gift-slider" min="1000" max="5000" step="200" value="1200" class="sl w-full" oninput="syncSlider('gift-val',this);calculate()">
+        <div class="flex justify-between text-[10px] font-bold"><span class="text-blue-400">最低:1,000円</span><span class="text-yel-500">平均:2,000円</span><span class="text-red-400">上司・親族:5,000円</span></div>
     </div>
 
-    <!-- ゲスト関連 自動計算 -->
-    <div class="bg-amber-50 border border-amber-100 rounded-xl p-3 space-y-1.5">
-        <p class="text-[11px] font-bold text-amber-700">📋 ゲスト関連 自動計算費用（人数連動）</p>
-        <div class="flex justify-between items-center text-xs text-gray-600 py-1 border-b border-amber-100">
-            <span>招待状切手代（返信用含む・約150円/人）</span>
-            <span id="stamp-total" class="font-bold text-gray-700">9,000円</span>
+    <div class="bg-yel-50 border-2 border-yel-100 rounded-2xl p-3 space-y-1.5">
+        <p class="text-xs font-black text-yel-500 mb-2">📋 ゲスト関連費用（人数連動で自動計算）</p>
+        <div class="flex justify-between items-center text-xs font-bold text-gray-600 py-1 border-b border-yel-100">
+            <span>招待状切手代（返信用込・150円/人）</span>
+            <span id="stamp-total" class="text-gray-700">9,000円</span>
         </div>
-        <label class="hl-g flex items-center gap-2 cursor-pointer rounded-lg p-1 tr">
-            <input type="checkbox" id="chk-flower-shower" onchange="calculate()" class="w-4 h-4 text-amber-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <span class="text-xs text-gray-700">フラワーシャワー（生花・450円/人）</span>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+<span id="lbl-fshower">27,000</span>円</span>
-            </div>
-        </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1 tr">
-            <input type="checkbox" id="chk-okuruma" onchange="calculate()" class="w-4 h-4 text-amber-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <span class="text-xs text-gray-700">お礼・心付け・遠方ゲストお車代（概算一律）</span>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+75,000円</span>
-            </div>
-        </label>
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1 tr">
-            <input type="checkbox" id="chk-kitsuke" onchange="calculate()" class="w-4 h-4 text-amber-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <span class="text-xs text-gray-700">親族・特別ゲストの着付け・ヘアメイク代（概算）</span>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+50,000円</span>
-            </div>
-        </label>
+        <label class="chk-row"><input type="checkbox" id="chk-flower-shower" onchange="calculate()"><div class="flex-1 flex justify-between items-center"><span class="text-sm font-bold text-gray-700">🌺 フラワーシャワー（生花・450円/人）</span><span class="text-xs font-black text-red-400 ml-2">+<span id="lbl-fshower">27,000</span>円</span></div></label>
+        <label class="chk-row"><input type="checkbox" id="chk-okuruma" onchange="calculate()"><div class="flex-1 flex justify-between items-center"><span class="text-sm font-bold text-gray-700">🚗 お礼・心付け・遠方ゲストお車代（概算）</span><span class="text-xs font-black text-red-400 ml-2">+75,000円</span></div></label>
+        <label class="chk-row"><input type="checkbox" id="chk-kitsuke" onchange="calculate()"><div class="flex-1 flex justify-between items-center"><span class="text-sm font-bold text-gray-700">👘 親族・特別ゲストの着付け・ヘアメイク</span><span class="text-xs font-black text-red-400 ml-2">+50,000円</span></div></label>
     </div>
 
-    <!-- 演出・保険 -->
-    <div class="space-y-1.5">
+    <div class="space-y-1">
         <div class="flex justify-between items-start">
-            <label class="text-sm font-semibold text-gray-800">演出機材費・著作権使用料</label>
-            <span id="staging-val" class="text-xl font-bold text-gold-600">0</span><span class="text-xs text-gray-400">円</span>
+            <label class="font-bold text-sm text-gray-700">演出機材費・著作権使用料</label>
+            <span id="staging-val" class="text-xl font-black text-pink-500">0</span><span class="text-xs text-gray-400">円</span>
         </div>
-        <input type="range" id="staging-slider" min="0" max="60000" step="5000" value="0" class="sl w-full" oninput="syncSlider('staging-val',this); calculate()">
-        <div class="flex justify-between text-[10px]">
-            <span class="text-blue-500 font-medium">なし: 0円</span>
-            <span class="text-amber-500 font-medium">平均: 45,000円</span>
-            <span class="text-red-400 font-medium">MAX: 60,000円</span>
-        </div>
-        <!-- BGM警告 -->
-        <div class="flex items-start gap-2 bg-orange-50 border border-orange-100 rounded-lg p-2 mt-1">
-            <span class="text-orange-500 text-sm mt-0.5">⚠️</span>
-            <p class="text-[10px] text-orange-700 leading-relaxed"><strong>BGM自前持ち込みの罠：</strong>自前のCDや外部音源を使う場合、著作権処理・音響機材持込料として<strong>+50,000〜100,000円</strong>が別途発生します。節約どころか逆コストになるケースがあります。</p>
+        <input type="range" id="staging-slider" min="0" max="60000" step="5000" value="0" class="sl w-full" oninput="syncSlider('staging-val',this);calculate()">
+        <div class="flex justify-between text-[10px] font-bold"><span class="text-blue-400">なし:0円</span><span class="text-yel-500">平均:45,000円</span><span class="text-red-400">MAX:60,000円</span></div>
+        <div class="flex gap-2 bg-orange-50 border-2 border-orange-100 rounded-xl p-2.5 mt-1">
+            <span class="text-orange-400 text-sm mt-0.5 flex-shrink-0">⚠️</span>
+            <p class="text-[11px] font-bold text-orange-600">BGM自前持ち込みの罠：自前CDや外部音源を使う場合、著作権処理・音響機材持込料として <strong>+5〜10万円</strong> が発生する場合があります。節約のつもりが逆コストに！</p>
         </div>
     </div>
 
-    <div class="bg-amber-50 border border-amber-100 rounded-xl p-3">
-        <label class="hl flex items-center gap-2 cursor-pointer rounded-lg p-1 tr">
-            <input type="checkbox" id="chk-insurance" onchange="calculate()" class="w-4 h-4 text-amber-500 rounded border-gray-300">
-            <div class="flex-1 flex justify-between items-center">
-                <span class="text-sm text-gray-700">ブライダル保険</span>
-                <span class="text-xs text-red-500 font-bold whitespace-nowrap ml-2">+18,200円</span>
-            </div>
-        </label>
-    </div>
+    <label class="chk-row bg-gray-50 rounded-2xl"><input type="checkbox" id="chk-insurance" onchange="calculate()"><div class="flex-1 flex justify-between items-center"><div><p class="text-sm font-bold text-gray-700">🛡️ ブライダル保険</p><p class="text-[10px] text-gray-400">台風・急病など万が一の時に安心</p></div><span class="text-xs font-black text-red-400 ml-2">+18,200円</span></div></label>
 
     <div class="space-y-1.5">
-        <label class="block text-sm font-semibold text-gray-800" for="base-venue">式場基本費用（挙式料・会場使用料・司会・音響等）</label>
+        <label class="block font-bold text-sm text-gray-700">🏛️ 式場基本費用（挙式料・会場使用料・司会・音響等）</label>
         <div class="flex items-center gap-2">
-            <input type="number" id="base-venue" value="350000" step="50000" min="0" oninput="calculate()" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-gold-400 text-base">
-            <span class="text-sm text-gray-400 whitespace-nowrap">円</span>
+            <input type="number" id="base-venue" value="350000" step="50000" min="0" oninput="calculate()" class="w-full px-4 py-2.5 rounded-2xl border-2 border-pink-100 focus:border-pink-300 text-base font-black outline-none">
+            <span class="text-sm text-gray-400 font-bold whitespace-nowrap">円</span>
         </div>
-        <p class="text-[11px] text-gray-400">料理・装花・衣装以外の式場固定費。式場見積もり書の会場費・挙式料・司会者料の合計を入力。</p>
+        <p class="text-[11px] text-gray-400">式場見積もり書の会場費・挙式料・司会者料の合計を入力してください。</p>
     </div>
 </div>
 
-<div class="ad-box adb"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8293269414215706" data-ad-slot="auto" data-ad-format="fluid" data-ad-layout="in-article"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+<!-- PR枠（タブ3下） -->
+<div class="card space-y-2">
+    <p class="text-[10px] font-black text-gray-400 text-center">📸 フォトウェディングもおすすめ！</p>
+    <a href="https://wedding.mynavi.jp/" target="_blank" rel="noopener sponsored" onclick="gtag('event','pr_click',{service:'mynavi',location:'tab_photo'})" class="pr-btn group">
+        <span class="emo-big">✨</span>
+        <div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">式場フェアを予約してAmazonギフト券をもらおう</p><p class="text-[11px] text-gray-400">マイナビウェディング｜ギフト券プレゼント実施中</p></div>
+        <span class="text-pink-400 font-black">→</span>
+        <span class="pr-badge">※PR</span>
+    </a>
+</div>
 </div>
 
 <!-- ===== TAB 4: 節約・指輪 ===== -->
 <div id="section-saving" class="space-y-4 hidden">
 
-<div class="bg-white p-5 rounded-2xl sc border border-gold-50 space-y-3">
-    <div class="flex items-center justify-between">
-        <h2 class="text-sm font-bold border-l-4 border-green-500 pl-2">✂️ 節約アクション</h2>
-        <span id="savings-badge" class="text-xs font-bold text-green-600 bg-green-50 border border-green-100 px-2 py-0.5 rounded-full"></span>
+<div class="card space-y-3">
+    <div class="flex items-center justify-between pb-2 border-b-2 border-pink-50">
+        <div class="flex items-center gap-3"><span class="emo-big">✂️</span><h2 class="font-black text-gray-800">節約アクション</h2></div>
+        <span id="savings-badge" class="text-xs font-black text-mint-500 bg-mint-100 px-3 py-1 rounded-full"></span>
     </div>
 
-    <!-- 持ち込み料説明 -->
-    <div class="bg-orange-50 border border-orange-200 rounded-xl p-3">
-        <p class="text-[11px] font-bold text-orange-700 mb-1">⚠️ 「持ち込み料」の罠に注意！</p>
-        <p class="text-[11px] text-gray-600 leading-relaxed">外部業者を利用して節約しようとすると、式場から<strong class="text-red-600">持ち込み料ペナルティ</strong>が発生する場合があります。各項目に【持ち込み料】を表示し、<strong>純節約額</strong>で自動計算します。</p>
+    <div class="bg-orange-50 border-2 border-orange-100 rounded-2xl p-3">
+        <p class="text-xs font-black text-orange-500 mb-1">⚠️ 持ち込み料の罠に注意！</p>
+        <p class="text-[11px] font-bold text-gray-600 leading-relaxed">外部業者を利用して節約しようとすると、式場から <strong class="text-red-500">持ち込み料ペナルティ</strong> が発生することがあります。各項目に【持ち込み料】を表示し、<strong>純節約額</strong> で自動計算します。</p>
     </div>
-    <p class="text-[11px] text-gray-400">純節約額は税込計算前の式場費用から控除（税効果あり）。持ち込み料は純節約額からさらに差し引かれます。</p>
 
     <div class="space-y-2">
-        <!-- ペーパーアイテム -->
-        <div class="border border-gray-100 rounded-xl overflow-hidden">
-            <label class="hl-g flex items-center p-3 cursor-pointer tr">
-                <input type="checkbox" id="chk-paper-bring" onchange="calculate()" class="w-4 h-4 text-green-600 rounded border-gray-300 flex-shrink-0">
-                <div class="ml-3 flex-1">
-                    <div class="flex justify-between items-start">
-                        <div><p class="text-sm font-medium text-gray-800">📄 ペーパーアイテムの自作・外注</p><p class="text-[11px] text-gray-400">Canva・minneでDIY。持ち込み料なし。</p></div>
-                        <div class="text-right ml-2"><p class="text-xs text-green-600 font-bold whitespace-nowrap">節約 -40,000円</p><p class="text-[10px] text-gray-400">持ち込み料: なし</p><p class="text-xs text-green-700 font-bold">純節約 -40,000円</p></div>
-                    </div>
-                </div>
+        <div class="border-2 border-mint-100 rounded-2xl overflow-hidden">
+            <label class="chk-row bg-mint-50 p-3"><input type="checkbox" id="chk-paper-bring" onchange="calculate()">
+                <div class="ml-1 flex-1"><div class="flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">📄 ペーパーアイテムの自作・外注</p><p class="text-[10px] text-gray-400">Canva・minneでDIY。持ち込み料なし✅</p></div><div class="text-right ml-2"><p class="text-[11px] font-bold text-mint-500">節約 -40,000円</p><p class="text-[10px] text-gray-400">持ち込み料: なし</p><p class="text-xs font-black text-mint-600">純節約 -40,000円</p></div></div></div>
             </label>
         </div>
-
-        <!-- ムービー自作 -->
-        <div class="border border-gray-100 rounded-xl overflow-hidden">
-            <label class="hl-g flex items-center p-3 cursor-pointer tr">
-                <input type="checkbox" id="chk-movie-hand" onchange="calculate()" class="w-4 h-4 text-green-600 rounded border-gray-300 flex-shrink-0">
-                <div class="ml-3 flex-1">
-                    <div class="flex justify-between items-start">
-                        <div><p class="text-sm font-medium text-gray-800">🎬 ムービーの自作・格安外注</p><p class="text-[11px] text-gray-400">CapCut/Filmoraで自作。BGM著作権に注意。</p></div>
-                        <div class="text-right ml-2"><p class="text-xs text-green-600 font-bold whitespace-nowrap">節約 -70,000円</p><p class="text-[10px] text-gray-400">持ち込み料: なし</p><p class="text-xs text-green-700 font-bold">純節約 -70,000円</p></div>
-                    </div>
-                </div>
+        <div class="border-2 border-mint-100 rounded-2xl overflow-hidden">
+            <label class="chk-row bg-mint-50 p-3"><input type="checkbox" id="chk-movie-hand" onchange="calculate()">
+                <div class="ml-1 flex-1"><div class="flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">🎬 ムービーの自作・格安外注</p><p class="text-[10px] text-gray-400">CapCut/Filmoraで自作。BGM著作権に注意⚠️</p></div><div class="text-right ml-2"><p class="text-[11px] font-bold text-mint-500">節約 -70,000円</p><p class="text-[10px] text-gray-400">持ち込み料: なし</p><p class="text-xs font-black text-mint-600">純節約 -70,000円</p></div></div></div>
             </label>
         </div>
-
-        <!-- ブーケ外部（持ち込み料あり） -->
-        <div class="border border-orange-100 rounded-xl overflow-hidden">
-            <label class="hl-g flex items-center p-3 cursor-pointer tr">
-                <input type="checkbox" id="chk-bouquet-out" onchange="calculate()" class="w-4 h-4 text-green-600 rounded border-gray-300 flex-shrink-0">
-                <div class="ml-3 flex-1">
-                    <div class="flex justify-between items-start">
-                        <div><p class="text-sm font-medium text-gray-800">💐 ブーケを外部フローリストへ依頼</p><p class="text-[11px] text-gray-400">外部手配で品質UP・コストDOWN</p></div>
-                        <div class="text-right ml-2"><p class="text-xs text-green-600 font-bold whitespace-nowrap">節約 -40,000円</p><p class="text-[10px] text-orange-500 font-bold">持ち込み料: +7,500円</p><p class="text-xs text-green-700 font-bold">純節約 -32,500円</p></div>
-                    </div>
-                </div>
+        <div class="border-2 border-orange-100 rounded-2xl overflow-hidden">
+            <label class="chk-row bg-mint-50 p-3"><input type="checkbox" id="chk-bouquet-out" onchange="calculate()">
+                <div class="ml-1 flex-1"><div class="flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">💐 ブーケを外部フローリストへ依頼</p><p class="text-[10px] text-gray-400">外部手配で品質UP・コストDOWN</p></div><div class="text-right ml-2"><p class="text-[11px] font-bold text-mint-500">節約 -40,000円</p><p class="text-[10px] font-bold text-orange-500">持ち込み料: +7,500円</p><p class="text-xs font-black text-mint-600">純節約 -32,500円</p></div></div></div>
             </label>
         </div>
-
-        <!-- ウェルカムボード -->
-        <div class="border border-gray-100 rounded-xl overflow-hidden">
-            <label class="hl-g flex items-center p-3 cursor-pointer tr">
-                <input type="checkbox" id="chk-welcome" onchange="calculate()" class="w-4 h-4 text-green-600 rounded border-gray-300 flex-shrink-0">
-                <div class="ml-3 flex-1">
-                    <div class="flex justify-between items-start">
-                        <div><p class="text-sm font-medium text-gray-800">🖼️ ウェルカムボード・スペースを自作</p><p class="text-[11px] text-gray-400">Canva→ネットプリントで数千円</p></div>
-                        <div class="text-right ml-2"><p class="text-xs text-green-600 font-bold whitespace-nowrap">節約 -25,000円</p><p class="text-[10px] text-gray-400">持ち込み料: なし</p><p class="text-xs text-green-700 font-bold">純節約 -25,000円</p></div>
-                    </div>
-                </div>
+        <div class="border-2 border-mint-100 rounded-2xl overflow-hidden">
+            <label class="chk-row bg-mint-50 p-3"><input type="checkbox" id="chk-welcome" onchange="calculate()">
+                <div class="ml-1 flex-1"><div class="flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">🖼️ ウェルカムボード・スペースを自作</p><p class="text-[10px] text-gray-400">Canva→ネットプリントで数千円</p></div><div class="text-right ml-2"><p class="text-[11px] font-bold text-mint-500">節約 -25,000円</p><p class="text-[10px] text-gray-400">持ち込み料: なし</p><p class="text-xs font-black text-mint-600">純節約 -25,000円</p></div></div></div>
             </label>
         </div>
-
-        <!-- 引出物外部（持ち込み料がゲスト数連動） -->
-        <div class="border border-orange-100 rounded-xl overflow-hidden">
-            <label class="hl-g flex items-center p-3 cursor-pointer tr">
-                <input type="checkbox" id="chk-catalog" onchange="calculate()" class="w-4 h-4 text-green-600 rounded border-gray-300 flex-shrink-0">
-                <div class="ml-3 flex-1">
-                    <div class="flex justify-between items-start">
-                        <div><p class="text-sm font-medium text-gray-800">🎀 引出物をカタログギフトで外部調達</p><p class="text-[11px] text-gray-400">式場発注より大幅安価。事前交渉要。</p></div>
-                        <div class="text-right ml-2"><p class="text-xs text-green-600 font-bold whitespace-nowrap">節約 -35,000円</p><p class="text-[10px] text-orange-500 font-bold">持ち込み料: +<span id="lbl-catalog-fee">24,000</span>円</p><p class="text-xs font-bold" id="lbl-catalog-net">純節約 -11,000円</p></div>
-                    </div>
-                </div>
+        <div class="border-2 border-orange-100 rounded-2xl overflow-hidden">
+            <label class="chk-row bg-mint-50 p-3"><input type="checkbox" id="chk-catalog" onchange="calculate()">
+                <div class="ml-1 flex-1"><div class="flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">🎀 引出物をカタログギフトで外部調達</p><p class="text-[10px] text-gray-400">式場発注より大幅安価。事前交渉要。</p></div><div class="text-right ml-2"><p class="text-[11px] font-bold text-mint-500">節約 -35,000円</p><p class="text-[10px] font-bold text-orange-500">持ち込み料: +<span id="lbl-catalog-fee">24,000</span>円</p><p class="text-xs font-black" id="lbl-catalog-net">純節約 -11,000円</p></div></div></div>
             </label>
         </div>
-
-        <!-- ヘアメイク外部 -->
-        <div class="border border-gray-100 rounded-xl overflow-hidden">
-            <label class="hl-g flex items-center p-3 cursor-pointer tr">
-                <input type="checkbox" id="chk-beauty-out" onchange="calculate()" class="w-4 h-4 text-green-600 rounded border-gray-300 flex-shrink-0">
-                <div class="ml-3 flex-1">
-                    <div class="flex justify-between items-start">
-                        <div><p class="text-sm font-medium text-gray-800">💅 ヘアメイクを外部サロンで手配</p><p class="text-[11px] text-gray-400">持ち込み料差引きでも外部が安いケース多数</p></div>
-                        <div class="text-right ml-2"><p class="text-xs text-green-600 font-bold whitespace-nowrap">節約 -60,000円</p><p class="text-[10px] text-gray-400">持ち込み料: なし</p><p class="text-xs text-green-700 font-bold">純節約 -60,000円</p></div>
-                    </div>
-                </div>
+        <div class="border-2 border-mint-100 rounded-2xl overflow-hidden">
+            <label class="chk-row bg-mint-50 p-3"><input type="checkbox" id="chk-beauty-out" onchange="calculate()">
+                <div class="ml-1 flex-1"><div class="flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">💅 ヘアメイクを外部サロンで手配</p><p class="text-[10px] text-gray-400">持ち込み料差引きでも外部が安いケース多数</p></div><div class="text-right ml-2"><p class="text-[11px] font-bold text-mint-500">節約 -60,000円</p><p class="text-[10px] text-gray-400">持ち込み料: なし</p><p class="text-xs font-black text-mint-600">純節約 -60,000円</p></div></div></div>
             </label>
         </div>
-
-        <!-- ドレス外部持ち込み（持ち込み料高額） -->
-        <div class="border border-red-100 rounded-xl overflow-hidden">
-            <label class="hl-g flex items-center p-3 cursor-pointer tr">
-                <input type="checkbox" id="chk-dress-bring" onchange="calculate()" class="w-4 h-4 text-green-600 rounded border-gray-300 flex-shrink-0">
-                <div class="ml-3 flex-1">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-sm font-medium text-gray-800">👗 ウェディングドレスを外部でレンタル</p>
-                            <p class="text-[11px] text-gray-400">外部は選択肢が豊富で安価な場合も</p>
-                        </div>
-                        <div class="text-right ml-2"><p class="text-xs text-green-600 font-bold whitespace-nowrap">節約 -100,000円</p><p class="text-[10px] text-red-500 font-bold">持ち込み料: +35,000円/着</p><p class="text-xs text-green-700 font-bold">純節約 -65,000円</p></div>
-                    </div>
-                </div>
+        <div class="border-2 border-red-100 rounded-2xl overflow-hidden">
+            <label class="chk-row bg-mint-50 p-3"><input type="checkbox" id="chk-dress-bring" onchange="calculate()">
+                <div class="ml-1 flex-1"><div class="flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">👗 ウェディングドレスを外部でレンタル</p><p class="text-[10px] text-gray-400">外部は選択肢が豊富で安価な場合も</p></div><div class="text-right ml-2"><p class="text-[11px] font-bold text-mint-500">節約 -100,000円</p><p class="text-[10px] font-bold text-red-500">持ち込み料: +35,000円/着</p><p class="text-xs font-black text-mint-600">純節約 -65,000円</p></div></div></div>
             </label>
-            <div class="bg-red-50 px-3 py-1.5">
-                <p class="text-[10px] text-red-600">⚠️ 持ち込み料の相場は20,000〜50,000円/着。式場によっては「式場提携店以外はNG」のケースも要確認。</p>
-            </div>
+            <p class="text-[10px] font-bold text-red-500 bg-red-50 px-3 py-1.5">⚠️ 持ち込み料の相場：20,000〜50,000円/着。式場によっては提携店以外NG の場合も要確認。</p>
         </div>
-
-        <!-- 二次会 -->
-        <div class="border border-gray-100 rounded-xl overflow-hidden">
-            <label class="hl-g flex items-center p-3 cursor-pointer tr">
-                <input type="checkbox" id="chk-nijikai" onchange="calculate()" class="w-4 h-4 text-green-600 rounded border-gray-300 flex-shrink-0">
-                <div class="ml-3 flex-1">
-                    <div class="flex justify-between items-start">
-                        <div><p class="text-sm font-medium text-gray-800">🥂 二次会を会費制パーティースペースで</p><p class="text-[11px] text-gray-400">幹事依頼＋会費制で自己負担ゼロも可能</p></div>
-                        <div class="text-right ml-2"><p class="text-xs text-green-600 font-bold whitespace-nowrap">節約 -80,000円</p><p class="text-[10px] text-gray-400">持ち込み料: なし</p><p class="text-xs text-green-700 font-bold">純節約 -80,000円</p></div>
-                    </div>
-                </div>
+        <div class="border-2 border-mint-100 rounded-2xl overflow-hidden">
+            <label class="chk-row bg-mint-50 p-3"><input type="checkbox" id="chk-nijikai" onchange="calculate()">
+                <div class="ml-1 flex-1"><div class="flex justify-between items-start"><div><p class="text-sm font-bold text-gray-700">🥂 二次会を会費制パーティースペースで</p><p class="text-[10px] text-gray-400">幹事依頼＋会費制で自己負担ゼロも可能</p></div><div class="text-right ml-2"><p class="text-[11px] font-bold text-mint-500">節約 -80,000円</p><p class="text-[10px] text-gray-400">持ち込み料: なし</p><p class="text-xs font-black text-mint-600">純節約 -80,000円</p></div></div></div>
             </label>
         </div>
     </div>
 
-    <!-- 節約合計 -->
-    <div class="bg-green-50 border border-green-200 rounded-xl p-3 space-y-1 text-xs">
-        <div class="flex justify-between text-green-700"><span>節約グロス合計</span><span id="gross-savings-display" class="font-bold">0円</span></div>
-        <div class="flex justify-between text-orange-600"><span>持ち込み料ペナルティ合計</span><span id="mochikomi-display" class="font-bold">0円</span></div>
-        <div class="flex justify-between text-green-800 font-bold border-t border-green-200 pt-1"><span>純節約額（計算に使用）</span><span id="net-savings-display">0円</span></div>
+    <div class="bg-mint-50 border-2 border-mint-100 rounded-2xl p-3 space-y-1">
+        <div class="flex justify-between text-xs font-bold text-mint-600"><span>節約グロス合計</span><span id="gross-savings-display">0円</span></div>
+        <div class="flex justify-between text-xs font-bold text-orange-500"><span>持ち込み料ペナルティ合計</span><span id="mochikomi-display">0円</span></div>
+        <div class="flex justify-between text-sm font-black text-mint-700 border-t border-mint-200 pt-1.5"><span>✂️ 純節約額（計算に使用）</span><span id="net-savings-display">0円</span></div>
     </div>
 </div>
 
 <!-- 指輪 -->
-<div class="bg-white p-5 rounded-2xl sc border border-gold-50 space-y-4">
-    <div>
-        <h2 class="text-sm font-bold border-l-4 border-gold-500 pl-2 mb-1">💍 結婚指輪（式場サービス料対象外・別途計上）</h2>
-        <p class="text-[11px] text-gray-400">指輪費用は式場のサービス料（10%）の対象外として別途計上されます。</p>
+<div class="card space-y-4">
+    <div class="flex items-center gap-3 pb-2 border-b-2 border-pink-50">
+        <span class="emo-big">💍</span>
+        <div><h2 class="font-black text-gray-800">結婚指輪</h2><p class="text-[11px] text-gray-400 font-bold">式場サービス料対象外・別途計上されます</p></div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <label class="ring-card"><input type="radio" name="ringTier" value="120000" onchange="calculate()"><div class="ri"><div class="flex items-center gap-2 mb-2"><span class="text-xl">💍</span><div><p class="font-bold text-sm text-gray-800">シンプル・セレクト</p><p class="text-gold-600 font-bold text-sm">約10〜20万円</p></div></div><p class="text-[11px] text-gray-400">4℃、STAR JEWELRY等。シンプルで飽きのこないデザイン。</p><span class="text-[10px] bg-blue-50 text-blue-600 font-bold px-2 py-0.5 rounded-full mt-2 inline-block">コスパ◎</span></div></label>
-        <label class="ring-card"><input type="radio" name="ringTier" value="280000" onchange="calculate()" checked><div class="ri"><div class="flex items-center gap-2 mb-2"><span class="text-xl">💎</span><div><p class="font-bold text-sm text-gray-800">国内人気ブランド</p><p class="text-gold-600 font-bold text-sm">約20〜35万円</p></div></div><p class="text-[11px] text-gray-400">アイプリモ、俄（NIWAKA）等。職人手作りで一生モノの品質。</p><span class="text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full mt-2 inline-block">最多選択</span></div></label>
-        <label class="ring-card"><input type="radio" name="ringTier" value="450000" onchange="calculate()"><div class="ri"><div class="flex items-center gap-2 mb-2"><span class="text-xl">👑</span><div><p class="font-bold text-sm text-gray-800">ハイブランド</p><p class="text-gold-600 font-bold text-sm">約35〜60万円</p></div></div><p class="text-[11px] text-gray-400">Cartier、Tiffany & Co.等。ブランドの格と生涯保証。</p><span class="text-[10px] bg-purple-50 text-purple-600 font-bold px-2 py-0.5 rounded-full mt-2 inline-block">ステータス重視</span></div></label>
-        <label class="ring-card"><input type="radio" name="ringTier" value="750000" onchange="calculate()"><div class="ri"><div class="flex items-center gap-2 mb-2"><span class="text-xl">✨</span><div><p class="font-bold text-sm text-gray-800">フルオーダー / 最高峰</p><p class="text-gold-600 font-bold text-sm">約50〜100万円+</p></div></div><p class="text-[11px] text-gray-400">完全オーダーメイド・大粒ダイヤの一点物。</p><span class="text-[10px] bg-red-50 text-red-500 font-bold px-2 py-0.5 rounded-full mt-2 inline-block">究極のこだわり</span></div></label>
+    <div class="grid grid-cols-2 gap-2">
+        <label class="cursor-pointer ring-opt">
+            <input type="radio" name="ringTier" value="120000" onchange="calculate()" class="hidden peer">
+            <div class="peer-checked:border-pink-400 peer-checked:bg-pink-50 border-2 border-gray-100 rounded-2xl p-3 transition-all hover:border-pink-200">
+                <div class="text-2xl mb-1">💍</div>
+                <p class="font-black text-xs text-gray-700">シンプル・セレクト</p>
+                <p class="font-black text-sm text-pink-500 mt-0.5">約10〜20万円</p>
+                <p class="text-[10px] text-gray-400 mt-1">4℃、STAR JEWELRY等</p>
+                <span class="text-[10px] bg-blue-100 text-blue-600 font-black px-2 py-0.5 rounded-full mt-1 inline-block">コスパ◎</span>
+            </div>
+        </label>
+        <label class="cursor-pointer">
+            <input type="radio" name="ringTier" value="280000" onchange="calculate()" class="hidden peer" checked>
+            <div class="peer-checked:border-pink-400 peer-checked:bg-pink-50 border-2 border-gray-100 rounded-2xl p-3 transition-all hover:border-pink-200">
+                <div class="text-2xl mb-1">💎</div>
+                <p class="font-black text-xs text-gray-700">国内人気ブランド</p>
+                <p class="font-black text-sm text-pink-500 mt-0.5">約20〜35万円</p>
+                <p class="text-[10px] text-gray-400 mt-1">アイプリモ、俄（NIWAKA）等</p>
+                <span class="text-[10px] bg-pink-100 text-pink-600 font-black px-2 py-0.5 rounded-full mt-1 inline-block">最多選択</span>
+            </div>
+        </label>
+        <label class="cursor-pointer">
+            <input type="radio" name="ringTier" value="450000" onchange="calculate()" class="hidden peer">
+            <div class="peer-checked:border-pink-400 peer-checked:bg-pink-50 border-2 border-gray-100 rounded-2xl p-3 transition-all hover:border-pink-200">
+                <div class="text-2xl mb-1">👑</div>
+                <p class="font-black text-xs text-gray-700">ハイブランド</p>
+                <p class="font-black text-sm text-pink-500 mt-0.5">約35〜60万円</p>
+                <p class="text-[10px] text-gray-400 mt-1">Cartier、Tiffany & Co.等</p>
+                <span class="text-[10px] bg-purple-100 text-purple-600 font-black px-2 py-0.5 rounded-full mt-1 inline-block">ステータス</span>
+            </div>
+        </label>
+        <label class="cursor-pointer">
+            <input type="radio" name="ringTier" value="750000" onchange="calculate()" class="hidden peer">
+            <div class="peer-checked:border-pink-400 peer-checked:bg-pink-50 border-2 border-gray-100 rounded-2xl p-3 transition-all hover:border-pink-200">
+                <div class="text-2xl mb-1">✨</div>
+                <p class="font-black text-xs text-gray-700">フルオーダー</p>
+                <p class="font-black text-sm text-pink-500 mt-0.5">約50〜100万円+</p>
+                <p class="text-[10px] text-gray-400 mt-1">完全オーダーメイド・大粒ダイヤ</p>
+                <span class="text-[10px] bg-red-100 text-red-500 font-black px-2 py-0.5 rounded-full mt-1 inline-block">こだわり派</span>
+            </div>
+        </label>
     </div>
-    <div class="space-y-1.5">
-        <label class="text-sm font-semibold text-gray-700 block">実際の費用を直接入力（任意）</label>
+    <div class="space-y-1">
+        <label class="font-bold text-sm text-gray-700 block">実際の費用を直接入力（任意）</label>
         <div class="flex items-center gap-2">
-            <input type="number" id="ring-custom" placeholder="例：320000" step="10000" min="0" oninput="calculate()" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-gold-400 text-base">
-            <span class="text-sm text-gray-400 whitespace-nowrap">円（ペア）</span>
+            <input type="number" id="ring-custom" placeholder="例：320000" step="10000" min="0" oninput="calculate()" class="w-full px-4 py-2.5 rounded-2xl border-2 border-pink-100 focus:border-pink-300 text-base font-black outline-none">
+            <span class="text-sm text-gray-400 font-bold whitespace-nowrap">円（ペア）</span>
         </div>
-        <button onclick="document.getElementById('ring-custom').value=''; calculate()" class="text-xs text-gray-400 underline">クリアしてカード選択に戻す</button>
+        <button onclick="document.getElementById('ring-custom').value='';calculate()" class="text-xs text-gray-400 font-bold underline">クリアしてカード選択に戻す</button>
     </div>
+</div>
+
+<!-- PR枠（タブ4下） -->
+<div class="card space-y-2">
+    <p class="text-[10px] font-black text-gray-400 text-center">💍 指輪探しはこちら</p>
+    <a href="https://www.brilliance-plus.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','pr_click',{service:'brilliance',location:'tab_saving'})" class="pr-btn group">
+        <span class="emo-big">💫</span>
+        <div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">オンラインで指輪を比較・購入</p><p class="text-[11px] text-gray-400">BRILLIANCE+｜中間業者なし・高品質ダイヤをコスパ良く</p></div>
+        <span class="text-pink-400 font-black">→</span>
+        <span class="pr-badge">※PR</span>
+    </a>
+    <a href="https://www.niwaka.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','pr_click',{service:'niwaka',location:'tab_saving'})" class="pr-btn group">
+        <span class="emo-big">🌸</span>
+        <div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">職人が作る和のウェディングリング</p><p class="text-[11px] text-gray-400">俄（NIWAKA）｜京都生まれ・日本の美を纏う逸品</p></div>
+        <span class="text-pink-400 font-black">→</span>
+        <span class="pr-badge">※PR</span>
+    </a>
 </div>
 </div>
 
-<!-- ===== TAB 5: 💰 節約サービス ===== -->
+<!-- ===== TAB 5: サービス一覧 ===== -->
 <div id="section-affiliate" class="space-y-4 hidden">
-    <div class="bg-gradient-to-r from-gold-50 to-amber-50 border border-gold-100 rounded-2xl p-4"><p class="text-xs text-gold-700 font-bold mb-1">💡 賢い花嫁のポイント</p><p class="text-xs text-gray-600 leading-relaxed">式場探しから指輪選びまで、賢く比較すれば<strong class="text-gold-700">数十万円の節約</strong>も可能です。</p></div>
-    <div class="bg-white p-5 rounded-2xl sc border border-gold-50 space-y-3">
-        <h2 class="text-sm font-bold border-l-4 border-gold-500 pl-2">🏛️ 式場探し・相談</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <a href="https://toki-hana.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'tokihana'})" class="ac block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-xl flex-shrink-0">🌸</div><div><p class="font-bold text-sm text-gray-800">トキハナ</p><p class="text-xs text-green-600 font-bold mt-0.5">値引き交渉を元プランナーが代行</p><p class="text-xs text-gray-400 mt-1">透明な費用で最大限の値引きを実現。</p><span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">無料相談 / 交渉代行</span></div></div></a>
-            <a href="https://zexy.net/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'zexy'})" class="ac block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center text-xl flex-shrink-0">💍</div><div><p class="font-bold text-sm text-gray-800">ゼクシィ</p><p class="text-xs text-green-600 font-bold mt-0.5">国内最大級 2,000式場以上を比較</p><p class="text-xs text-gray-400 mt-1">口コミ・費用感・写真が充実。</p><span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">口コミ・費用比較</span></div></div></a>
-            <a href="https://wedding.mynavi.jp/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'mynavi'})" class="ac block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-xl flex-shrink-0">✨</div><div><p class="font-bold text-sm text-gray-800">マイナビウェディング</p><p class="text-xs text-green-600 font-bold mt-0.5">フェア参加でギフト券がもらえる</p><p class="text-xs text-gray-400 mt-1">Amazonギフト券プレゼントキャンペーン実施中。</p><span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">ギフト券特典あり</span></div></div></a>
-            <a href="https://www.weddingpark.net/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'weddingpark'})" class="ac block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-xl flex-shrink-0">🌿</div><div><p class="font-bold text-sm text-gray-800">ウェディングパーク</p><p class="text-xs text-green-600 font-bold mt-0.5">費用明細つき口コミが豊富</p><p class="text-xs text-gray-400 mt-1">先輩花嫁の実際の費用内訳まで見られる。</p><span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">リアル費用明細あり</span></div></div></a>
-            <a href="https://hanayume.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'hanayume'})" class="ac block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center text-xl flex-shrink-0">🌼</div><div><p class="font-bold text-sm text-gray-800">ハナユメ</p><p class="text-xs text-green-600 font-bold mt-0.5">式場フェア予約で特典あり</p><p class="text-xs text-gray-400 mt-1">式場候補を複数比較するのに使いやすい。</p><span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">フェア予約</span></div></div></a>
-            <a href="https://wedding.ikyu.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'ikyu'})" class="ac block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-yellow-50 flex items-center justify-center text-xl flex-shrink-0">🏯</div><div><p class="font-bold text-sm text-gray-800">一休ウェディング</p><p class="text-xs text-green-600 font-bold mt-0.5">高級ホテル・旅館ウェディング特化</p><p class="text-xs text-gray-400 mt-1">ラグジュアリー式場を探すなら一休。</p><span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">高級ホテル専門</span></div></div></a>
+    <div class="card">
+        <p class="text-center text-sm font-black text-gray-700 mb-4">💡 賢い花嫁が使っているサービス</p>
+        <div class="space-y-2">
+            <p class="text-xs font-black text-gray-400 pb-1 border-b border-gray-100">🏛️ 式場探し・相談サービス</p>
+            <a href="https://toki-hana.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'tokihana'})" class="pr-btn group"><span class="emo-big">🌸</span><div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">トキハナ</p><p class="text-xs text-gray-400">元プランナーが値引き交渉代行・持ち込み料0円の式場を探せる</p></div><span class="text-pink-400 font-black">→</span><span class="pr-badge">※PR</span></a>
+            <a href="https://zexy.net/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'zexy'})" class="pr-btn group"><span class="emo-big">💍</span><div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">ゼクシィ</p><p class="text-xs text-gray-400">国内最大級 2,000式場以上。口コミ・費用明細が充実</p></div><span class="text-pink-400 font-black">→</span><span class="pr-badge">※PR</span></a>
+            <a href="https://wedding.mynavi.jp/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'mynavi'})" class="pr-btn group"><span class="emo-big">✨</span><div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">マイナビウェディング</p><p class="text-xs text-gray-400">フェア参加でAmazonギフト券プレゼント！</p></div><span class="text-pink-400 font-black">→</span><span class="pr-badge">※PR</span></a>
+            <a href="https://www.weddingpark.net/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'weddingpark'})" class="pr-btn group"><span class="emo-big">🌿</span><div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">ウェディングパーク</p><p class="text-xs text-gray-400">費用明細つき口コミが豊富。先輩花嫁のリアルが見れる</p></div><span class="text-pink-400 font-black">→</span><span class="pr-badge">※PR</span></a>
+            <a href="https://hanayume.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'hanayume'})" class="pr-btn group"><span class="emo-big">🌼</span><div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">ハナユメ</p><p class="text-xs text-gray-400">式場フェア予約で特典あり</p></div><span class="text-pink-400 font-black">→</span><span class="pr-badge">※PR</span></a>
+            <a href="https://wedding.ikyu.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'ikyu'})" class="pr-btn group"><span class="emo-big">🏯</span><div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">一休ウェディング</p><p class="text-xs text-gray-400">高級ホテル・旅館ウェディング特化</p></div><span class="text-pink-400 font-black">→</span><span class="pr-badge">※PR</span></a>
         </div>
-    </div>
-    <div class="bg-white p-5 rounded-2xl sc border border-gold-50 space-y-3">
-        <h2 class="text-sm font-bold border-l-4 border-gold-500 pl-2">💍 結婚指輪・婚約指輪</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <a href="https://www.brilliance-plus.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'brilliance'})" class="ac block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-xl flex-shrink-0">💫</div><div><p class="font-bold text-sm text-gray-800">BRILLIANCE+</p><p class="text-xs text-green-600 font-bold mt-0.5">オンライン完結でコスパ最高</p><p class="text-xs text-gray-400 mt-1">中間業者を省いた価格で高品質ダイヤを提供。</p><span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">オンライン購入可</span></div></div></a>
-            <a href="https://the-kiss.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'thekiss'})" class="ac block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-xl flex-shrink-0">💗</div><div><p class="font-bold text-sm text-gray-800">THE KISS</p><p class="text-xs text-green-600 font-bold mt-0.5">ペアリング専門 コスパ抜群</p><p class="text-xs text-gray-400 mt-1">シンプルで日常使いしやすいデザインが豊富。</p><span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">ペア専門店</span></div></div></a>
-            <a href="https://www.niwaka.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'niwaka'})" class="ac block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center text-xl flex-shrink-0">🌸</div><div><p class="font-bold text-sm text-gray-800">俄（NIWAKA）</p><p class="text-xs text-green-600 font-bold mt-0.5">日本の美・職人仕上げの逸品</p><p class="text-xs text-gray-400 mt-1">京都生まれの老舗。和の美しさが人気。</p><span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">国内ブランド</span></div></div></a>
-            <a href="https://www.jewelry-4c.jp/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'4c'})" class="ac block bg-white border border-gray-100 rounded-xl p-4 hover:border-gold-200"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-cyan-50 flex items-center justify-center text-xl flex-shrink-0">🔷</div><div><p class="font-bold text-sm text-gray-800">4℃（ヨンドシー）</p><p class="text-xs text-green-600 font-bold mt-0.5">上品なデザインで手ごろな価格帯</p><p class="text-xs text-gray-400 mt-1">10〜20万円台でシンプル上品なリングが揃う。</p><span class="inline-block mt-2 text-[10px] bg-gold-100 text-gold-700 font-bold px-2 py-0.5 rounded-full">コスパ◎</span></div></div></a>
+        <div class="space-y-2 mt-4">
+            <p class="text-xs font-black text-gray-400 pb-1 border-b border-gray-100">💍 結婚指輪・婚約指輪</p>
+            <a href="https://www.brilliance-plus.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'brilliance'})" class="pr-btn group"><span class="emo-big">💫</span><div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">BRILLIANCE+</p><p class="text-xs text-gray-400">オンライン完結・中間業者なし・コスパ最強ダイヤ</p></div><span class="text-pink-400 font-black">→</span><span class="pr-badge">※PR</span></a>
+            <a href="https://the-kiss.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'thekiss'})" class="pr-btn group"><span class="emo-big">💗</span><div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">THE KISS</p><p class="text-xs text-gray-400">ペアリング専門。コスパ◎ 日常使いしやすいデザイン</p></div><span class="text-pink-400 font-black">→</span><span class="pr-badge">※PR</span></a>
+            <a href="https://www.niwaka.com/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'niwaka'})" class="pr-btn group"><span class="emo-big">🌸</span><div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">俄（NIWAKA）</p><p class="text-xs text-gray-400">京都生まれ・職人手作りの和の美しさ</p></div><span class="text-pink-400 font-black">→</span><span class="pr-badge">※PR</span></a>
+            <a href="https://www.jewelry-4c.jp/" target="_blank" rel="noopener sponsored" onclick="gtag('event','affiliate_click',{service:'4c'})" class="pr-btn group"><span class="emo-big">🔷</span><div class="flex-1"><p class="font-black text-sm text-gray-800 group-hover:text-pink-600">4℃（ヨンドシー）</p><p class="text-xs text-gray-400">10〜20万円台でシンプル上品なリングが揃う</p></div><span class="text-pink-400 font-black">→</span><span class="pr-badge">※PR</span></a>
         </div>
+        <p class="text-center text-[10px] text-gray-400 mt-4">※ 上記リンクはアフィリエイトリンクを含む場合があります</p>
     </div>
-    <div class="adb"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8293269414215706" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
-    <p class="text-center text-[10px] text-gray-400">※ 上記リンクはアフィリエイトリンクを含む場合があります</p>
+</div>
+
+<!-- ===== AdSense ===== -->
+<div class="rounded-2xl overflow-hidden" style="min-height:80px;background:#f9f9f9;">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8293269414215706" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
 </div>
 
 </main>
 
-<div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-gray-100 shadow-lg z-40">
-    <div class="max-w-4xl mx-auto"><p class="text-center text-[9px] text-gray-300 pt-0.5">広告</p>
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8293269414215706" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
-</div>
+<!-- ===== FOOTER ===== -->
+<footer class="bg-white border-t-2 border-pink-50 mt-8 pb-8">
+    <div class="max-w-2xl mx-auto px-4 py-8 space-y-6">
+        <div class="text-center">
+            <p class="font-black text-lg">💍 ウェディング費用シミュレーター</p>
+            <p class="text-xs text-gray-400 mt-1">プレ花嫁のための無料シミュレーターサービス</p>
+        </div>
+        <nav class="flex flex-wrap justify-center gap-3">
+            <a href="#about"   class="text-xs font-bold text-gray-500 underline hover:text-pink-500 transition-colors">運営者情報</a>
+            <span class="text-gray-200">|</span>
+            <a href="#privacy" class="text-xs font-bold text-gray-500 underline hover:text-pink-500 transition-colors">プライバシーポリシー</a>
+            <span class="text-gray-200">|</span>
+            <a href="#disclaimer" class="text-xs font-bold text-gray-500 underline hover:text-pink-500 transition-colors">免責事項</a>
+        </nav>
+
+        <div id="about" class="bg-gray-50 rounded-2xl p-4 space-y-1.5 scroll-mt-20">
+            <h3 class="font-black text-sm text-gray-700">📋 運営者情報</h3>
+            <p class="text-xs text-gray-500 leading-relaxed">本サービスは、プレ花嫁の方が結婚式費用の概算をシミュレーションするための情報提供を目的として、個人が運営しています。</p>
+            <p class="text-xs text-gray-500">運営者：SiNo-keito（個人運営）</p>
+            <p class="text-xs text-gray-500">お問い合わせ：本サービスに関するお問い合わせは <a href="https://github.com/SiNo-keito/wedding-cost-simulator" target="_blank" class="text-pink-500 underline">GitHubリポジトリ</a> よりお願いいたします。</p>
+        </div>
+
+        <div id="privacy" class="bg-gray-50 rounded-2xl p-4 space-y-1.5 scroll-mt-20">
+            <h3 class="font-black text-sm text-gray-700">🔒 プライバシーポリシー</h3>
+            <p class="text-xs text-gray-500 leading-relaxed font-bold">アクセス解析について</p>
+            <p class="text-xs text-gray-500 leading-relaxed">本サービスでは、Google Analytics 4（GA4）を利用してアクセス解析を行っています。Cookieを利用してデータを収集しますが、個人を特定する情報は一切収集しません。データ収集を希望されない方は、<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" class="text-pink-500 underline">Google アナリティクス オプトアウト アドオン</a>をご利用ください。</p>
+            <p class="text-xs text-gray-500 leading-relaxed font-bold mt-2">広告について</p>
+            <p class="text-xs text-gray-500 leading-relaxed">本サービスでは、Google AdSenseおよびアフィリエイトプログラムを利用した広告を掲載しています。これらのサービスはCookieを使用して、ユーザーに関連性の高い広告を表示する場合があります。</p>
+            <p class="text-xs text-gray-500 leading-relaxed">当サービスではユーザーの個人情報を独自に収集・保存する機能は持っておらず、全ての計算はブラウザ上でのみ行われます。</p>
+        </div>
+
+        <div id="disclaimer" class="bg-gray-50 rounded-2xl p-4 space-y-1.5 scroll-mt-20">
+            <h3 class="font-black text-sm text-gray-700">⚠️ 免責事項</h3>
+            <p class="text-xs text-gray-500 leading-relaxed">本シミュレーターで表示される金額はあくまでも概算であり、実際の費用を保証するものではありません。実際の費用は式場・地域・シーズン・人数・選択するオプション等により大幅に異なる場合があります。</p>
+            <p class="text-xs text-gray-500 leading-relaxed mt-1">本サービスの情報を参考にされた結果生じたいかなる損害・トラブルについても、当運営者は一切の責任を負いません。必ず式場や各事業者と直接ご確認の上、最終的なご判断はご自身でお願いいたします。</p>
+            <p class="text-xs text-gray-500 leading-relaxed mt-1">本サービスに掲載されているアフィリエイトリンク（「※PR」表記あり）は、各提携サービスへのリンクです。クリック・成約により当運営者が報酬を受け取る場合がありますが、掲載内容の公正性には影響しません。</p>
+        </div>
+
+        <p class="text-center text-[11px] text-gray-300 font-bold">© 2025 Wedding Cost Simulator. All rights reserved.</p>
+    </div>
+</footer>
 
 <script>
 // ===== MODES =====
-const MODES = {
-    dream:{
-        sliders:{'food-slider':10500,'drink-slider':4200,'cake-slider':750,'hightable-slider':65000,'guesttable-slider':6500,'dress-slider':0,'oiro-slider':0,'photo-slider':120000,'gift-slider':1200,'staging-slider':0},
-        checks:{'chk-main-rankup':false,'chk-dessert':false,'chk-cocktail':false,'chk-champagne':false,'chk-welcome-drink':false,'chk-table-vol':false,'chk-bouquet-extra':false,'chk-inner':false,'chk-groom-hair':false,'chk-dress-insurance':false,'chk-groom-set':false,'chk-rehearsal':false,'chk-video':false,'chk-endroll':false,'chk-album':false,'chk-flower-shower':false,'chk-okuruma':false,'chk-kitsuke':false,'chk-insurance':false}
-    },
-    real:{
-        sliders:{'food-slider':14000,'drink-slider':5500,'cake-slider':1300,'hightable-slider':135000,'guesttable-slider':9500,'dress-slider':150000,'oiro-slider':225000,'photo-slider':200000,'gift-slider':2000,'staging-slider':45000},
-        checks:{'chk-main-rankup':true,'chk-dessert':false,'chk-cocktail':true,'chk-champagne':true,'chk-welcome-drink':true,'chk-table-vol':true,'chk-bouquet-extra':true,'chk-inner':true,'chk-groom-hair':true,'chk-dress-insurance':true,'chk-groom-set':true,'chk-rehearsal':true,'chk-video':true,'chk-endroll':true,'chk-album':true,'chk-flower-shower':true,'chk-okuruma':true,'chk-kitsuke':false,'chk-insurance':true}
-    }
+const MODES={
+    dream:{sliders:{'food-slider':10500,'drink-slider':4200,'cake-slider':750,'hightable-slider':65000,'guesttable-slider':6500,'dress-slider':0,'oiro-slider':0,'photo-slider':120000,'gift-slider':1200,'staging-slider':0},checks:{'chk-main-rankup':false,'chk-dessert':false,'chk-cocktail':false,'chk-champagne':false,'chk-welcome-drink':false,'chk-table-vol':false,'chk-bouquet-extra':false,'chk-inner':false,'chk-groom-hair':false,'chk-dress-insurance':false,'chk-groom-set':false,'chk-rehearsal':false,'chk-video':false,'chk-endroll':false,'chk-album':false,'chk-flower-shower':false,'chk-okuruma':false,'chk-kitsuke':false,'chk-insurance':false}},
+    real:{sliders:{'food-slider':14000,'drink-slider':5500,'cake-slider':1300,'hightable-slider':135000,'guesttable-slider':9500,'dress-slider':150000,'oiro-slider':225000,'photo-slider':200000,'gift-slider':2000,'staging-slider':45000},checks:{'chk-main-rankup':true,'chk-dessert':false,'chk-cocktail':true,'chk-champagne':true,'chk-welcome-drink':true,'chk-table-vol':true,'chk-bouquet-extra':true,'chk-inner':true,'chk-groom-hair':true,'chk-dress-insurance':true,'chk-groom-set':true,'chk-rehearsal':true,'chk-video':true,'chk-endroll':true,'chk-album':true,'chk-flower-shower':true,'chk-okuruma':true,'chk-kitsuke':false,'chk-insurance':true}}
 };
 
 // ===== HELPERS =====
-function updateTrack(el){const p=((el.value-el.min)/(el.max-el.min))*100;el.style.background=`linear-gradient(to right,#c5a059 0%,#c5a059 ${p}%,#e5e7eb ${p}%,#e5e7eb 100%)`;}
+function updateTrack(el){const p=((el.value-el.min)/(el.max-el.min))*100;el.style.background=`linear-gradient(to right,#f472b6 0%,#f472b6 ${p}%,#fce7f3 ${p}%,#fce7f3 100%)`;}
 function syncSlider(dispId,el){const d=document.getElementById(dispId);if(d)d.innerText=parseInt(el.value).toLocaleString();updateTrack(el);}
 function syncGuests(el){updateTrack(el);const g=parseInt(el.value);document.getElementById('guest-val').innerText=g;const ts=parseInt(document.getElementById('table-size').value);const t=Math.ceil(g/ts);document.getElementById('table-val').innerText=t;const tcd=document.getElementById('table-count-display');if(tcd)tcd.innerText=t;}
 function chk(id){const e=document.getElementById(id);return e&&e.checked;}
@@ -790,19 +711,20 @@ function getContributionRate(){const v=document.getElementById('contribution-typ
 // ===== MODE SWITCH =====
 function setMode(mode){
     const cfg=MODES[mode];
-    Object.entries(cfg.sliders).forEach(([id,val])=>{const e=document.getElementById(id);if(!e)return;e.value=val;updateTrack(e);const dispMap={'food-slider':'food-val','drink-slider':'drink-val','cake-slider':'cake-val','hightable-slider':'hightable-val','guesttable-slider':'guesttable-val','dress-slider':'dress-val','oiro-slider':'oiro-val','photo-slider':'photo-val','gift-slider':'gift-val','staging-slider':'staging-val'};const dId=dispMap[id];if(dId){const d=document.getElementById(dId);if(d)d.innerText=parseInt(val).toLocaleString();}});
+    const dispMap={'food-slider':'food-val','drink-slider':'drink-val','cake-slider':'cake-val','hightable-slider':'hightable-val','guesttable-slider':'guesttable-val','dress-slider':'dress-val','oiro-slider':'oiro-val','photo-slider':'photo-val','gift-slider':'gift-val','staging-slider':'staging-val'};
+    Object.entries(cfg.sliders).forEach(([id,val])=>{const e=document.getElementById(id);if(!e)return;e.value=val;updateTrack(e);const dId=dispMap[id];if(dId){const d=document.getElementById(dId);if(d)d.innerText=parseInt(val).toLocaleString();}});
     Object.entries(cfg.checks).forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.checked=v;});
     const db=document.getElementById('btn-dream'),rb=document.getElementById('btn-real'),dc=document.getElementById('mode-desc');
     if(mode==='dream'){
-        db.className='flex-1 flex items-center justify-center gap-1.5 text-xs font-bold py-2.5 px-2 rounded-xl bg-pink-400 text-white shadow-sm tr';
-        rb.className='flex-1 flex items-center justify-center gap-1.5 text-xs font-bold py-2.5 px-2 rounded-xl text-gray-500 tr hover:bg-gray-200';
-        dc.className='text-[11px] text-pink-700 bg-pink-50 border border-pink-100 rounded-xl px-3 py-2 text-center leading-relaxed';
-        dc.innerHTML='各項目が<strong>初期見積もり最低ライン</strong>に設定されています 🌸';
+        db.style.cssText='flex:1;padding:10px;border-radius:20px;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#f9a8d4,#f472b6);color:#fff;box-shadow:0 4px 14px rgba(244,114,182,.4);transition:all .2s;';
+        rb.style.cssText='flex:1;padding:10px;border-radius:20px;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;background:transparent;color:#f9a8d4;transition:all .2s;';
+        dc.className='text-center text-xs font-bold text-pink-500 bg-pink-50 rounded-2xl px-4 py-2.5';
+        dc.innerHTML='各項目が <strong>初期見積もりの最低ライン</strong> に設定されています 🌸';
     }else{
-        db.className='flex-1 flex items-center justify-center gap-1.5 text-xs font-bold py-2.5 px-2 rounded-xl text-gray-500 tr hover:bg-gray-200';
-        rb.className='flex-1 flex items-center justify-center gap-1.5 text-xs font-bold py-2.5 px-2 rounded-xl bg-red-500 text-white shadow-sm pr tr';
-        dc.className='text-[11px] text-red-700 bg-red-50 border border-red-100 rounded-xl px-3 py-2 text-center leading-relaxed';
-        dc.innerHTML='⚠️ 各項目が<strong>先輩花嫁の平均着地価格</strong>に設定。隠れ必須コストも全てONです。';
+        db.style.cssText='flex:1;padding:10px;border-radius:20px;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;background:transparent;color:#f9a8d4;transition:all .2s;';
+        rb.style.cssText='flex:1;padding:10px;border-radius:20px;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#fb7185,#ef4444);color:#fff;box-shadow:0 4px 14px rgba(239,68,68,.4);transition:all .2s;';
+        dc.className='text-center text-xs font-bold text-red-500 bg-red-50 rounded-2xl px-4 py-2.5';
+        dc.innerHTML='⚠️ 各項目が <strong>先輩花嫁の平均着地価格</strong> に設定。隠れ必須コストも全てONです！';
     }
     gtag('event','mode_switch',{mode});
     calculate();
@@ -812,201 +734,149 @@ function onContributionChange(){const v=document.getElementById('contribution-ty
 
 function switchTab(name){
     document.querySelectorAll('[id^="section-"]').forEach(e=>e.classList.add('hidden'));
-    document.querySelectorAll('[id^="tab-"]').forEach(e=>{e.classList.remove('border-gold-500','text-gold-700','font-bold');e.classList.add('border-transparent','text-gray-400');});
+    document.querySelectorAll('[id^="tab-"]').forEach(e=>{e.className='pill-tab';});
     document.getElementById('section-'+name).classList.remove('hidden');
-    const b=document.getElementById('tab-'+name);b.classList.remove('border-transparent','text-gray-400');b.classList.add('border-gold-500','text-gold-700','font-bold');
+    document.getElementById('tab-'+name).classList.add('active');
     gtag('event','tab_switch',{tab_name:name});
 }
 
-// ===== MAIN CALCULATE =====
+// ===== CALCULATE =====
 function calculate(){
-    const guests = parseInt(document.getElementById('guest-slider').value);
-    const tableSize = parseInt(document.getElementById('table-size').value);
-    const tables = Math.ceil(guests/tableSize);
-    document.getElementById('guest-val').innerText = guests;
-    document.getElementById('table-val').innerText = tables;
+    const guests=parseInt(document.getElementById('guest-slider').value);
+    const tableSize=parseInt(document.getElementById('table-size').value);
+    const tables=Math.ceil(guests/tableSize);
+    document.getElementById('guest-val').innerText=guests;
+    document.getElementById('table-val').innerText=tables;
     const tcd=document.getElementById('table-count-display');if(tcd)tcd.innerText=tables;
 
-    // Per-person option labels (dynamic)
-    const updateLbl=(id,n)=>{const e=document.getElementById(id);if(e)e.innerText=fmt(n).replace('円','');};
-    updateLbl('lbl-mainup',   2500*guests);
-    updateLbl('lbl-dessert',  1750*guests);
-    updateLbl('lbl-cocktail', 1500*guests);
-    updateLbl('lbl-champagne',1000*guests);
-    updateLbl('lbl-welcome',  1300*guests);
-    updateLbl('lbl-table-vol',3500*tables);
-    updateLbl('lbl-fshower',  450*guests);
+    // Dynamic labels
+    const ul=(id,n)=>{const e=document.getElementById(id);if(e)e.innerText=n.toLocaleString();};
+    ul('lbl-mainup',2500*guests); ul('lbl-dessert',1750*guests); ul('lbl-cocktail',1500*guests); ul('lbl-champagne',1000*guests); ul('lbl-welcome',1300*guests); ul('lbl-table-vol',3500*tables); ul('lbl-fshower',450*guests);
+    const catFee=400*guests; ul('lbl-catalog-fee',catFee);
+    const catNet=35000-catFee;
+    const cn=document.getElementById('lbl-catalog-net');if(cn){cn.innerText=catNet>=0?'純節約 -'+fmt(catNet):'逆コスト +'+fmt(Math.abs(catNet));cn.className='text-xs font-black '+(catNet>=0?'text-mint-600':'text-red-500');}
 
-    // 引出物持ち込み料（ゲスト数連動）
-    const catalogFee = 400*guests;
-    const catalogNet = 35000-catalogFee;
-    const clFee=document.getElementById('lbl-catalog-fee');if(clFee)clFee.innerText=catalogFee.toLocaleString();
-    const clNet=document.getElementById('lbl-catalog-net');if(clNet){clNet.innerText='純節約 '+(catalogNet>=0?'-'+fmt(catalogNet):'逆コスト +'+fmt(Math.abs(catalogNet)));clNet.className='text-xs font-bold '+(catalogNet>=0?'text-green-700':'text-red-600');}
+    // Food
+    const foodPP=sl('food-slider'),drinkPP=sl('drink-slider'),cakePP=sl('cake-slider');
+    const foodOpts=(chk('chk-main-rankup')?2500:0)+(chk('chk-dessert')?1750:0);
+    const drinkOpts=(chk('chk-cocktail')?1500:0)+(chk('chk-champagne')?1000:0)+(chk('chk-welcome-drink')?1300:0);
+    const foodTotal=(foodPP+foodOpts+drinkPP+drinkOpts+cakePP)*guests;
+    document.getElementById('food-total').innerText=fmt(foodPP*guests);
+    document.getElementById('drink-total').innerText=fmt(drinkPP*guests);
+    document.getElementById('cake-total').innerText=fmt(cakePP*guests);
 
-    // ===== FOOD =====
-    const foodPP  = sl('food-slider');
-    const drinkPP = sl('drink-slider');
-    const cakePP  = sl('cake-slider');
-    const mainRankPP    = chk('chk-main-rankup')   ? 2500 : 0;
-    const dessertPP     = chk('chk-dessert')        ? 1750 : 0;
-    const cocktailPP    = chk('chk-cocktail')       ? 1500 : 0;
-    const champagnePP   = chk('chk-champagne')      ? 1000 : 0;
-    const welcomePP     = chk('chk-welcome-drink')  ? 1300 : 0;
-    const foodTotal = (foodPP+mainRankPP+dessertPP+drinkPP+cocktailPP+champagnePP+welcomePP+cakePP)*guests;
-    document.getElementById('food-total').innerText  = fmt(foodPP*guests);
-    document.getElementById('drink-total').innerText = fmt(drinkPP*guests);
-    document.getElementById('cake-total').innerText  = fmt(cakePP*guests);
+    // Flowers
+    const highTable=sl('hightable-slider'),gtPT=sl('guesttable-slider');
+    const tableVol=chk('chk-table-vol')?3500*tables:0;
+    const gtTotal=gtPT*tables+tableVol;
+    const bouqExtra=chk('chk-bouquet-extra')?55000:0;
+    const flowerTotal=highTable+gtTotal+bouqExtra;
+    document.getElementById('guesttable-total').innerText=fmt(gtPT*tables);
 
-    // ===== FLOWERS =====
-    const highTable = sl('hightable-slider');
-    const gtPT      = sl('guesttable-slider');
-    const tableVol  = chk('chk-table-vol') ? 3500*tables : 0;
-    const gtTotal   = gtPT*tables + tableVol;
-    const bouquetExtra = chk('chk-bouquet-extra') ? 55000 : 0;
-    const flowerTotal  = highTable+gtTotal+bouquetExtra;
-    document.getElementById('guesttable-total').innerText = fmt(gtPT*tables);
+    // Attire
+    const attireTotal=sl('dress-slider')+sl('oiro-slider')+(chk('chk-inner')?38500:0)+(chk('chk-groom-hair')?7500:0)+(chk('chk-dress-insurance')?20000:0)+(chk('chk-groom-set')?16500:0)+(chk('chk-rehearsal')?25000:0);
 
-    // ===== ATTIRE =====
-    const dressExtra  = sl('dress-slider');
-    const oiroExtra   = sl('oiro-slider');
-    const innerCost   = chk('chk-inner')          ? 38500  : 0;
-    const groomHair   = chk('chk-groom-hair')     ? 7500   : 0;
-    const dressIns    = chk('chk-dress-insurance')? 20000  : 0;
-    const groomSet    = chk('chk-groom-set')      ? 16500  : 0;
-    const rehearsal   = chk('chk-rehearsal')      ? 25000  : 0;
-    const attireTotal = dressExtra+oiroExtra+innerCost+groomHair+dressIns+groomSet+rehearsal;
+    // Photo
+    const photoTotal=sl('photo-slider')+(chk('chk-video')?125000:0)+(chk('chk-endroll')?175000:0)+(chk('chk-album')?75000:0);
 
-    // ===== PHOTO =====
-    const photoCost    = sl('photo-slider');
-    const videoCost    = chk('chk-video')   ? 125000 : 0;
-    const endrollCost  = chk('chk-endroll') ? 175000 : 0;
-    const albumCost    = chk('chk-album')   ? 75000  : 0;
-    const photoTotal   = photoCost+videoCost+endrollCost+albumCost;
+    // Misc
+    const giftSub=(sl('gift-slider')+500)*guests;
+    const stampCost=150*guests;
+    const fshower=chk('chk-flower-shower')?450*guests:0;
+    const miscTotal=giftSub+stampCost+fshower+(chk('chk-okuruma')?75000:0)+(chk('chk-kitsuke')?50000:0)+(chk('chk-insurance')?18200:0)+sl('staging-slider')+sl('base-venue');
+    document.getElementById('gift-total').innerText=fmt(giftSub);
+    document.getElementById('stamp-total').innerText=fmt(stampCost);
 
-    // ===== MISC =====
-    const giftPP     = sl('gift-slider');
-    const bagPP      = 500;  // updated to 500円/人
-    const giftSub    = (giftPP+bagPP)*guests;
-    const stampCost  = 150*guests;   // always included
-    const fshower    = chk('chk-flower-shower')? 450*guests : 0;
-    const okuruma    = chk('chk-okuruma')      ? 75000     : 0;
-    const kitsuke    = chk('chk-kitsuke')      ? 50000     : 0;
-    const insurance  = chk('chk-insurance')    ? 18200     : 0;
-    const staging    = sl('staging-slider');
-    const baseCost   = sl('base-venue');
-    const miscTotal  = giftSub+stampCost+fshower+okuruma+kitsuke+insurance+staging+baseCost;
-    document.getElementById('gift-total').innerText = fmt(giftSub);
-    document.getElementById('stamp-total').innerText = fmt(stampCost);
-    const lfs=document.getElementById('lbl-fshower');if(lfs)lfs.innerText=(450*guests).toLocaleString();
-
-    // ===== SAVINGS & 持ち込み料 =====
-    let grossSavings=0, mochikomiTotal=0;
-    if(chk('chk-paper-bring'))  grossSavings+=40000;
-    if(chk('chk-movie-hand'))   grossSavings+=70000;
-    if(chk('chk-bouquet-out'))  {grossSavings+=40000; mochikomiTotal+=7500;}
-    if(chk('chk-welcome'))      grossSavings+=25000;
-    if(chk('chk-catalog'))      {grossSavings+=35000; mochikomiTotal+=catalogFee;}
-    if(chk('chk-beauty-out'))   grossSavings+=60000;
-    if(chk('chk-dress-bring'))  {grossSavings+=100000; mochikomiTotal+=35000;}
-    if(chk('chk-nijikai'))      grossSavings+=80000;
-    const netSavings = Math.max(0, grossSavings-mochikomiTotal);
-
-    const sb=document.getElementById('savings-badge');
-    if(sb)sb.innerText=netSavings>0?'純節約 -'+fmt(netSavings):'';
-    const gsd=document.getElementById('gross-savings-display');if(gsd)gsd.innerText=grossSavings>0?'-'+fmt(grossSavings):'0円';
-    const mcd=document.getElementById('mochikomi-display');if(mcd)mcd.innerText=mochikomiTotal>0?'+'+fmt(mochikomiTotal):'0円';
+    // Savings + 持ち込み料
+    let gross=0,mochi=0;
+    if(chk('chk-paper-bring'))gross+=40000;
+    if(chk('chk-movie-hand'))gross+=70000;
+    if(chk('chk-bouquet-out')){gross+=40000;mochi+=7500;}
+    if(chk('chk-welcome'))gross+=25000;
+    if(chk('chk-catalog')){gross+=35000;mochi+=catFee;}
+    if(chk('chk-beauty-out'))gross+=60000;
+    if(chk('chk-dress-bring')){gross+=100000;mochi+=35000;}
+    if(chk('chk-nijikai'))gross+=80000;
+    const netSavings=Math.max(0,gross-mochi);
+    const gsd=document.getElementById('gross-savings-display');if(gsd)gsd.innerText=gross>0?'-'+fmt(gross):'0円';
+    const mcd=document.getElementById('mochikomi-display');if(mcd)mcd.innerText=mochi>0?'+'+fmt(mochi):'0円';
     const nsd=document.getElementById('net-savings-display');if(nsd)nsd.innerText=netSavings>0?'-'+fmt(netSavings):'0円';
+    const sb=document.getElementById('savings-badge');if(sb)sb.innerText=netSavings>0?'純節約 -'+fmt(netSavings):'';
 
-    // ===== VENUE SUBTOTAL (tax-exclusive) =====
-    const venueSub     = foodTotal+flowerTotal+attireTotal+photoTotal+miscTotal-netSavings;
+    // Venue subtotal → ×1.21 (service×tax)
+    const venueSub=foodTotal+flowerTotal+attireTotal+photoTotal+miscTotal-netSavings;
+    const serviceCharge=Math.round(venueSub*0.1);
+    const withService=venueSub+serviceCharge;
+    const consTax=Math.round(withService*0.1);
+    const venueGross=withService+consTax;
 
-    // ===== TAX: subtotal × 1.1(service) × 1.1(tax) = × 1.21 =====
-    const serviceCharge = Math.round(venueSub*0.1);
-    const withService   = venueSub+serviceCharge;
-    const consTax       = Math.round(withService*0.1);
-    const venueGross    = withService+consTax;
+    // Ring
+    const ringCost=getRingCost();
+    const grandTotal=venueGross+ringCost;
+    const goshugi=guests*getContributionRate();
+    const burden=grandTotal-goshugi;
 
-    // ===== RING =====
-    const ringCost   = getRingCost();
-    const grandTotal = venueGross+ringCost;
-
-    // ===== CONTRIBUTION =====
-    const goshugi = guests*getContributionRate();
-    const burden  = grandTotal-goshugi;
-
-    // ===== UPDATE KPIs =====
-    document.getElementById('kpi-venue').innerText   = fmt(venueGross);
-    document.getElementById('kpi-goshugi').innerText = fmt(goshugi);
+    // KPIs
+    document.getElementById('kpi-venue').innerText=fmt(venueGross);
+    document.getElementById('kpi-goshugi').innerText=fmt(goshugi);
     const be=document.getElementById('kpi-burden');
-    if(burden>0){be.innerText=fmt(burden);be.className='text-2xl md:text-3xl font-bold text-gold-400 tr';}
-    else{be.innerText='黒字（+'+fmt(Math.abs(burden))+'）';be.className='text-2xl md:text-3xl font-bold text-green-400 tr';}
+    if(burden>0){be.innerText=fmt(burden);be.style.color='#ec4899';}
+    else{be.innerText='黒字（+'+fmt(Math.abs(burden))+'）';be.style.color='#10b981';}
 
-    // ===== PER-PERSON BURDEN INDICATOR =====
-    const perPerson = guests>0 ? Math.round(burden/guests) : 0;
+    // Per-person burden
+    const perPerson=guests>0?Math.round(burden/guests):0;
     const ppVal=document.getElementById('pp-val'),ppBar=document.getElementById('pp-bar'),ppMsg=document.getElementById('pp-msg'),ppCard=document.getElementById('pp-card');
-    ppVal.innerText = perPerson>0 ? fmt(perPerson) : (perPerson<0?'黒字':'―');
+    ppVal.innerText=perPerson>0?fmt(perPerson):(perPerson<0?'黒字':'―');
     const pct=Math.min(Math.max(perPerson,0)/800000*100,100);
     ppBar.style.width=pct+'%';
-    if(perPerson<0){
-        ppBar.style.background='#4ade80'; ppMsg.innerText='🎉 ゲスト回収額が上回っています（黒字）';
-        ppCard.className='bg-green-50 border border-green-200 rounded-xl p-3';
-    } else if(perPerson<150000){
-        ppBar.style.background='#4ade80'; ppMsg.innerText='';
-        ppCard.className='bg-gray-50 border border-gray-200 rounded-xl p-3';
-    } else if(perPerson<350000){
-        ppBar.style.background='#facc15'; ppMsg.innerText='💡 招待人数が少ないほど固定費の比率が高まります';
-        ppCard.className='bg-yellow-50 border border-yellow-200 rounded-xl p-3';
-    } else if(perPerson<600000){
-        ppBar.style.background='#f97316'; ppMsg.innerText='⚠️ 招待人数が少ないため、1人あたり負担が急増しています';
-        ppCard.className='bg-orange-50 border border-orange-200 rounded-xl p-3';
-    } else {
-        ppBar.style.background='#ef4444'; ppMsg.innerText='🚨 固定費（写真・会場費・指輪等）が重くのしかかっています。招待人数の増加または固定費削減を検討してください';
-        ppCard.className='bg-red-50 border border-red-200 rounded-xl p-3';
-    }
+    if(perPerson<0){ppBar.style.background='#34d399';ppMsg.innerText='🎉 ゲスト回収額が上回っています（黒字）';ppCard.style.background='#f0fdf9';ppCard.style.borderColor='#99f6e4';}
+    else if(perPerson<150000){ppBar.style.background='#f472b6';ppMsg.innerText='';ppCard.style.background='';ppCard.style.borderColor='';}
+    else if(perPerson<350000){ppBar.style.background='#fbbf24';ppMsg.innerText='💡 招待人数が少ないほど固定費の比率が高まります';ppCard.style.background='#fffbeb';ppCard.style.borderColor='#fcd34d';}
+    else if(perPerson<600000){ppBar.style.background='#f97316';ppMsg.innerText='⚠️ 招待人数が少ないため、1人あたり負担が急増しています';ppCard.style.background='#fff7ed';ppCard.style.borderColor='#fed7aa';}
+    else{ppBar.style.background='#ef4444';ppMsg.innerText='🚨 固定費が重くのしかかっています！招待人数の増加または固定費削減を検討してください';ppCard.style.background='#fff5f5';ppCard.style.borderColor='#fecaca';}
 
-    // ===== BREAKDOWN =====
-    document.getElementById('bd-food').innerText        = fmt(foodTotal);
-    document.getElementById('bd-flower').innerText      = fmt(flowerTotal);
-    document.getElementById('bd-attire').innerText      = fmt(attireTotal);
-    document.getElementById('bd-photo').innerText       = fmt(photoTotal);
-    document.getElementById('bd-misc').innerText        = fmt(miscTotal);
-    document.getElementById('bd-savings').innerText     = netSavings>0?'- '+fmt(netSavings):'0円';
-    document.getElementById('bd-mochikomi').innerText   = mochikomiTotal>0?'+ '+fmt(mochikomiTotal):'なし';
-    document.getElementById('bd-subtotal').innerText    = fmt(venueSub);
-    document.getElementById('bd-service').innerText     = '+ '+fmt(serviceCharge);
-    document.getElementById('bd-tax').innerText         = '+ '+fmt(consTax);
-    document.getElementById('bd-venue-total').innerText = fmt(venueGross);
-    document.getElementById('bd-ring').innerText        = fmt(ringCost);
-    document.getElementById('bd-grand').innerText       = fmt(grandTotal);
-    document.getElementById('bd-goshugi').innerText     = '- '+fmt(goshugi);
-    document.getElementById('bd-burden').innerText      = burden>0?fmt(burden):'黒字（+'+fmt(Math.abs(burden))+'）';
+    // Breakdown
+    document.getElementById('bd-food').innerText=fmt(foodTotal);
+    document.getElementById('bd-flower').innerText=fmt(flowerTotal);
+    document.getElementById('bd-attire').innerText=fmt(attireTotal);
+    document.getElementById('bd-photo').innerText=fmt(photoTotal);
+    document.getElementById('bd-misc').innerText=fmt(miscTotal);
+    document.getElementById('bd-savings').innerText=netSavings>0?'- '+fmt(netSavings):'0円';
+    document.getElementById('bd-mochikomi').innerText=mochi>0?'+ '+fmt(mochi):'なし';
+    document.getElementById('bd-subtotal').innerText=fmt(venueSub);
+    document.getElementById('bd-service').innerText='+ '+fmt(serviceCharge);
+    document.getElementById('bd-tax').innerText='+ '+fmt(consTax);
+    document.getElementById('bd-venue-total').innerText=fmt(venueGross);
+    document.getElementById('bd-ring').innerText=fmt(ringCost);
+    document.getElementById('bd-grand').innerText=fmt(grandTotal);
+    document.getElementById('bd-goshugi').innerText='- '+fmt(goshugi);
+    document.getElementById('bd-burden').innerText=burden>0?fmt(burden):'黒字（+'+fmt(Math.abs(burden))+'）';
 }
 
 // ===== SHARE =====
-function getResultText(){const v=document.getElementById('kpi-venue').innerText,s=document.getElementById('kpi-goshugi').innerText,b=document.getElementById('kpi-burden').innerText;return`【結婚式費用シミュレーション結果】\n式場費用（税込）: ${v}\nゲスト回収額: ${s}\n✨ 実質自己負担額: ${b}\n\n#結婚式費用 #プレ花嫁 #ウェディング\nhttps://wedding-cost-simulator-beta.vercel.app/`;}
-function shareToTwitter(){const v=document.getElementById('kpi-venue').innerText,b=document.getElementById('kpi-burden').innerText;const t=`【結婚式費用シミュレーション】\n式場費用（税込）: ${v}\n✨ 実質自己負担額: ${b}\n\n#結婚式費用 #プレ花嫁`;window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(t)}&url=${encodeURIComponent('https://wedding-cost-simulator-beta.vercel.app/')}`, '_blank');gtag('event','share',{method:'twitter'});}
-async function copyResult(){try{await navigator.clipboard.writeText(getResultText());const b=document.getElementById('copyBtnText');b.innerText='✓ コピー完了！';setTimeout(()=>{b.innerText='結果をコピー';},2000);gtag('event','share',{method:'clipboard'});}catch(e){alert('コピーに失敗しました。\n\n'+getResultText());}}
+function getResultText(){const v=document.getElementById('kpi-venue').innerText,s=document.getElementById('kpi-goshugi').innerText,b=document.getElementById('kpi-burden').innerText;return`【結婚式費用シミュレーション結果】\n式場費用（税込）: ${v}\nゲスト回収額: ${s}\n💸 実質自己負担額: ${b}\n\n#結婚式費用 #プレ花嫁 #ウェディング\nhttps://wedding-cost-simulator-beta.vercel.app/`;}
+function shareToTwitter(){const v=document.getElementById('kpi-venue').innerText,b=document.getElementById('kpi-burden').innerText;const t=`【結婚式費用シミュレーション】式場費用（税込）${v} ✂️ 実質自己負担額 ${b}\n#結婚式費用 #プレ花嫁`;window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(t)}&url=${encodeURIComponent('https://wedding-cost-simulator-beta.vercel.app/')}`, '_blank');gtag('event','share',{method:'twitter'});}
+async function copyResult(){try{await navigator.clipboard.writeText(getResultText());const b=document.getElementById('copyBtnText');b.innerText='✓ コピー完了！';setTimeout(()=>{b.innerText='📋 コピー';},2000);gtag('event','share',{method:'clipboard'});}catch(e){alert('コピーに失敗しました。\n\n'+getResultText());}}
 function saveAsImage(){
     const btn=document.getElementById('saveImageBtnText');btn.innerText='生成中...';
     const v=document.getElementById('kpi-venue').innerText,s=document.getElementById('kpi-goshugi').innerText,b=document.getElementById('kpi-burden').innerText;
-    const isSurplus=document.getElementById('kpi-burden').classList.contains('text-green-400');
+    const isSurplus=document.getElementById('kpi-burden').style.color!=='rgb(236, 72, 153)';
     const W=1200,H=630,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
     const ctx=canvas.getContext('2d');
-    const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#0f172a');bg.addColorStop(.5,'#1e293b');bg.addColorStop(1,'#0f172a');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-    ctx.save();ctx.strokeStyle='rgba(197,160,89,.07)';ctx.lineWidth=1;for(let i=-H;i<W+H;i+=48){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i+H,H);ctx.stroke();}ctx.restore();
-    const tl=ctx.createLinearGradient(0,0,W,0);tl.addColorStop(0,'transparent');tl.addColorStop(.3,'#c5a059');tl.addColorStop(.7,'#c5a059');tl.addColorStop(1,'transparent');ctx.fillStyle=tl;ctx.fillRect(0,0,W,3);
-    ctx.fillStyle='#c5a059';ctx.font='italic 700 22px Georgia,serif';ctx.textAlign='center';ctx.fillText('Wedding Financial Intelligence',W/2,58);
-    ctx.fillStyle='#f1f5f9';ctx.font='bold 40px sans-serif';ctx.fillText('リアル見積もり「闇」シミュレーター',W/2,112);
-    ctx.strokeStyle='rgba(197,160,89,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(160,136);ctx.lineTo(W-160,136);ctx.stroke();
-    function drawCard(x,y,w,h,label,value,lc,vc){ctx.fillStyle='rgba(30,41,59,.85)';const r=20;ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();ctx.fill();ctx.strokeStyle='rgba(197,160,89,.25)';ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle=lc;ctx.font='600 20px sans-serif';ctx.textAlign='center';ctx.fillText(label,x+w/2,y+44);ctx.fillStyle=vc;ctx.font='bold 34px sans-serif';ctx.fillText(value,x+w/2,y+96);}
-    const pad=60,gap=24,cW=(W-pad*2-gap*2)/3,cY=158,cH=128;
-    drawCard(pad,cY,cW,cH,'式場費用（税込）',v,'#94a3b8','#f1f5f9');drawCard(pad+cW+gap,cY,cW,cH,'ゲスト回収額（-）',s,'#86efac','#86efac');drawCard(pad+(cW+gap)*2,cY,cW,cH,'実質自己負担額',b,'#fde68a',isSurplus?'#4ade80':'#f59e0b');
-    const mY=340,mw=W-pad*2,mh=150;ctx.fillStyle='rgba(197,160,89,.08)';ctx.beginPath();ctx.roundRect(pad,mY,mw,mh,24);ctx.fill();ctx.strokeStyle='rgba(197,160,89,.4)';ctx.lineWidth=1.5;ctx.stroke();
-    ctx.fillStyle='#fde68a';ctx.font='600 22px sans-serif';ctx.textAlign='center';ctx.fillText('✨  最終的な実質自己負担額',W/2,mY+46);ctx.fillStyle=isSurplus?'#4ade80':'#f59e0b';ctx.font='bold 64px sans-serif';ctx.fillText(b,W/2,mY+128);
-    ctx.fillStyle='rgba(148,163,184,.7)';ctx.font='400 18px sans-serif';ctx.fillText('式場費用 小計×1.1（サービス料）×1.1（消費税）= 税込合計',W/2,526);
-    ctx.fillStyle='rgba(197,160,89,.6)';ctx.font='400 17px Georgia,serif';ctx.fillText('wedding-cost-simulator-beta.vercel.app',W/2,565);
+    const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#fff0f6');bg.addColorStop(.5,'#f0fdf9');bg.addColorStop(1,'#fffbeb');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='rgba(244,114,182,.06)';for(let i=0;i<6;i++){ctx.beginPath();ctx.arc(100+i*200,50,80,0,Math.PI*2);ctx.fill();}
+    ctx.fillStyle='#f472b6';ctx.font='bold 18px sans-serif';ctx.textAlign='center';ctx.fillText('💍 ウェディング費用シミュレーター',W/2,55);
+    ctx.fillStyle='#1f2937';ctx.font='bold 38px sans-serif';ctx.fillText('結婚式リアル費用シミュレーション結果',W/2,105);
+    ctx.strokeStyle='rgba(244,114,182,.3)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(150,125);ctx.lineTo(W-150,125);ctx.stroke();
+    function drawCard(x,y,w,h,label,value,lc,vc,bgColor){ctx.fillStyle=bgColor||'#fff';const r=20;ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();ctx.fill();ctx.strokeStyle='rgba(244,114,182,.2)';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle=lc;ctx.font='bold 18px sans-serif';ctx.textAlign='center';ctx.fillText(label,x+w/2,y+42);ctx.fillStyle=vc;ctx.font='bold 30px sans-serif';ctx.fillText(value,x+w/2,y+92);}
+    const pad=50,gap=20,cW=(W-pad*2-gap*2)/3,cY=148,cH=118;
+    drawCard(pad,cY,cW,cH,'式場費用（税込）',v,'#9ca3af','#374151','#ffffff');drawCard(pad+cW+gap,cY,cW,cH,'ゲスト回収額（▼）',s,'#34d399','#059669','#f0fdf9');drawCard(pad+(cW+gap)*2,cY,cW,cH,'実質自己負担額',b,'#f472b6',isSurplus?'#059669':'#ec4899','#fff0f6');
+    const mY=330,mw=W-pad*2,mh=160;ctx.fillStyle='rgba(252,231,243,.5)';ctx.strokeStyle='rgba(244,114,182,.4)';ctx.lineWidth=2;const mr=24;ctx.beginPath();ctx.moveTo(pad+mr,mY);ctx.lineTo(pad+mw-mr,mY);ctx.quadraticCurveTo(pad+mw,mY,pad+mw,mY+mr);ctx.lineTo(pad+mw,mY+mh-mr);ctx.quadraticCurveTo(pad+mw,mY+mh,pad+mw-mr,mY+mh);ctx.lineTo(pad+mr,mY+mh);ctx.quadraticCurveTo(pad,mY+mh,pad,mY+mh-mr);ctx.lineTo(pad,mY+mr);ctx.quadraticCurveTo(pad,mY,pad+mr,mY);ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.fillStyle='#ec4899';ctx.font='bold 22px sans-serif';ctx.textAlign='center';ctx.fillText('💸  実質 自己負担額',W/2,mY+46);ctx.fillStyle=isSurplus?'#059669':'#ec4899';ctx.font='bold 66px sans-serif';ctx.fillText(b,W/2,mY+136);
+    ctx.fillStyle='rgba(156,163,175,.8)';ctx.font='400 16px sans-serif';ctx.fillText('式場費用 小計×1.1（サービス料）×1.1（消費税）= 税込合計',W/2,528);
+    ctx.fillStyle='rgba(244,114,182,.7)';ctx.font='bold 15px sans-serif';ctx.fillText('wedding-cost-simulator-beta.vercel.app',W/2,566);
     const link=document.createElement('a');link.download='wedding-simulation-result.png';link.href=canvas.toDataURL('image/png');link.click();
-    btn.innerText='✓ 保存完了！';setTimeout(()=>{btn.innerText='画像で保存';},2500);gtag('event','share',{method:'save_image'});
+    btn.innerText='✓ 保存完了！';setTimeout(()=>{btn.innerText='📸 画像保存';},2500);gtag('event','share',{method:'save_image'});
 }
 
 // ===== INIT =====
